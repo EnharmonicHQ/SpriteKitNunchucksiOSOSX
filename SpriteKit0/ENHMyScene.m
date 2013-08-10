@@ -11,11 +11,14 @@
 
 static const uint32_t edgeCategory = 0x1 << 1;
 static const uint32_t shuttlecraftCategory = 0x1 << 2;
+static const uint32_t mouseCategory = 0x1 << 3;
 
 
 @interface ENHMyScene () <SKPhysicsContactDelegate>
 
 @property BOOL contentCreated;
+@property BOOL mouseWasMoving;
+@property SKSpriteNode *mouseNode;
 
 @end
 
@@ -26,7 +29,6 @@ static const uint32_t shuttlecraftCategory = 0x1 << 2;
     if (self = [super initWithSize:size])
     {
         self.backgroundColor = [SKColor colorWithRed:0.15f green:0.15f blue:0.3f alpha:1.0f];
-        
     }
     return self;
 }
@@ -42,8 +44,17 @@ static const uint32_t shuttlecraftCategory = 0x1 << 2;
     self.physicsBody.contactTestBitMask = 0;
     self.physicsWorld.gravity = (CGPoint) {0.0f, -9.8f};
     self.physicsWorld.contactDelegate = self;
-}
 
+    CGSize mouseSize = CGSizeMake(120.f, 120.f);
+    self.mouseNode = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:mouseSize];
+    SKPhysicsBody *spriteBody = [SKPhysicsBody bodyWithRectangleOfSize:mouseSize];
+    spriteBody.categoryBitMask = mouseCategory;
+    spriteBody.mass = 2;
+    spriteBody.restitution = 0.0f; //bouncy bouncy
+    spriteBody.collisionBitMask = shuttlecraftCategory;
+    spriteBody.affectedByGravity = NO;
+    self.mouseNode.physicsBody = spriteBody;
+}
 
 - (void)didMoveToView:(SKView *)view
 {
@@ -52,24 +63,6 @@ static const uint32_t shuttlecraftCategory = 0x1 << 2;
         [self createSceneContents];
         self.contentCreated = YES;
     }
-}
-
--(SKSpriteNode *)makeShuttlecraftAtLocation:(CGPoint)location
-{
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
-
-    sprite.position = location;
-    sprite.scale = 0.5f;
-    CGSize spriteSize = [sprite size];
-
-    SKPhysicsBody *spriteBody = [SKPhysicsBody bodyWithRectangleOfSize:spriteSize];
-    spriteBody.categoryBitMask = shuttlecraftCategory;
-    spriteBody.collisionBitMask = shuttlecraftCategory | edgeCategory; //collide with edge of scene and other shuttlecrafts
-    spriteBody.contactTestBitMask = shuttlecraftCategory ; //Let us know when shuttlecraft collides with another only (add | edgeCategory to get notifications at edge, too)
-    spriteBody.mass = 1;
-    spriteBody.restitution = .45f; //bouncy bouncy
-    sprite.physicsBody = spriteBody;
-    return sprite;
 }
 
 // Useful random functions.
@@ -83,21 +76,15 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
 
 -(void)wiggleStuff
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
     NSArray *nodes = [self children];
-    NSLog(@"NODES: %@", nodes);
     for (SKNode *node in nodes)
     {
-        CGFloat zRotation = node.zRotation;
-        NSLog(@"zRotation : %@", @(zRotation));
         SKPhysicsBody *physicsBody = node.physicsBody;
-        NSLog(@"physicsBody: %@", physicsBody);
 
         CGFloat dx = myRand(-1000, 1000);
         CGFloat dy = myRand(0, 1000*9.8);
         
         CGVector impulseVector = CGVectorMake(dx, dy);
-        NSLog(@"impulseVector: {%@, %@}", @(impulseVector.dx), @(impulseVector.dy));
         [physicsBody applyImpulse:impulseVector];
 
         CGFloat angularImpulse = myRand(-M_PI_4, M_PI_4);
@@ -107,16 +94,55 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
 
 - (void)keyDown:(NSEvent *)theEvent;
 {
-    NSLog(@"%@ %@", NSStringFromSelector(_cmd), theEvent);
     [self wiggleStuff];
+}
+
+-(SKSpriteNode *)makeShuttlecraftAtLocation:(CGPoint)location
+{
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
+
+    sprite.position = location;
+    sprite.scale = 0.25f;
+    CGSize spriteSize = [sprite size];
+
+    SKPhysicsBody *spriteBody = [SKPhysicsBody bodyWithRectangleOfSize:spriteSize];
+    spriteBody.categoryBitMask = shuttlecraftCategory;
+    spriteBody.collisionBitMask = shuttlecraftCategory | mouseCategory | edgeCategory; //collide with edge of scene and other shuttlecraft
+    spriteBody.contactTestBitMask = shuttlecraftCategory | mouseCategory; //Let us know when a shuttlecraft collides with another only (add | edgeCategory to get notifications at edge, too)
+    spriteBody.mass = 1;
+    spriteBody.restitution = .45f; //bouncy bouncy
+    spriteBody.linearDamping = 0.3f; //friction
+    sprite.physicsBody = spriteBody;
+    return sprite;
 }
 
 -(void)mouseDown:(NSEvent *)theEvent
 {
     CGPoint location = [theEvent locationInNode:self];
 
-    SKSpriteNode *sprite = [self makeShuttlecraftAtLocation:location];
-    [self addChild:sprite];
+    self.mouseNode.position = location;
+    [self addChild:self.mouseNode];
+}
+
+-(void)mouseUp:(NSEvent *)theEvent
+{
+    [self.mouseNode removeFromParent];
+    if (!self.mouseWasMoving)
+    {
+        CGPoint location = [theEvent locationInNode:self];
+        SKSpriteNode *sprite = [self makeShuttlecraftAtLocation:location];
+        [self addChild:sprite];
+        [self addChild:self.mouseNode];
+    }
+    self.mouseWasMoving = NO;
+    [self.mouseNode removeFromParent];
+}
+
+-(void)mouseDragged:(NSEvent *)theEvent
+{
+    CGPoint location = [theEvent locationInNode:self];
+    self.mouseNode.position = location;
+    self.mouseWasMoving = YES;
 }
 
 -(void)update:(CFTimeInterval)currentTime
@@ -134,14 +160,12 @@ NSString *enhSpecialPhysicsContactDescription(SKPhysicsContact *physicsThing)
 
 - (void)didBeginContact:(SKPhysicsContact *)contact;
 {
-    NSString *description = enhSpecialPhysicsContactDescription(contact);
-    NSLog(@"%@ %@", NSStringFromSelector(_cmd), description);
+//    NSString *description = enhSpecialPhysicsContactDescription(contact);
 }
 
 - (void)didEndContact:(SKPhysicsContact *)contact;
 {
-    NSString *description = enhSpecialPhysicsContactDescription(contact);
-    NSLog(@"%@ %@", NSStringFromSelector(_cmd), description);
+//    NSString *description = enhSpecialPhysicsContactDescription(contact);
 }
 
 
