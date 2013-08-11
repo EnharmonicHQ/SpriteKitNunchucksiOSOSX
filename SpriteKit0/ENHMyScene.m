@@ -18,7 +18,6 @@ static const uint32_t mouseCategory = 0x1 << 4;
 @interface ENHMyScene () <SKPhysicsContactDelegate>
 
 @property BOOL contentCreated;
-@property BOOL mouseWasMoving;
 @property SKSpriteNode *mouseNode;
 
 @end
@@ -139,17 +138,9 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
     return sprite;
 }
 
--(void)mouseDown:(NSEvent *)theEvent
-{
-    CGPoint location = [theEvent locationInNode:self];
-    self.mouseNode.position = location;
-    [self addChild:self.mouseNode];
-}
-
 -(void)mouseUp:(NSEvent *)theEvent
 {
-    [self.mouseNode removeFromParent];
-    if (!self.mouseWasMoving)
+    if (![self.mouseNode parent])
     {
         CGPoint location = [theEvent locationInNode:self];
         SKNode *spriteOne = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor greenColor] withStrokeColor:[SKColor blackColor]];
@@ -158,29 +149,28 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
         [self addChild:spriteOne];
         [self addChild:spriteTwo];
         SKPhysicsJointPin *chuckJoint = [SKPhysicsJointPin jointWithBodyA:spriteOne.physicsBody bodyB:spriteTwo.physicsBody anchor:location];
-        /*
-         @property (SK_NONATOMIC_IOSONLY) BOOL shouldEnableLimits;
-         @property (SK_NONATOMIC_IOSONLY) CGFloat lowerAngleLimit;
-         @property (SK_NONATOMIC_IOSONLY) CGFloat upperAngleLimit;
-         @property (SK_NONATOMIC_IOSONLY) CGFloat frictionTorque;
-         */
+
         chuckJoint.shouldEnableLimits = YES;
-        CGFloat angle = 165.0f;
-        chuckJoint.lowerAngleLimit = 0.0f - (2.0f * M_PI * angle/360.0f);
-        chuckJoint.upperAngleLimit = 0.0f + (2.0f * M_PI * angle/360.0f);
-        chuckJoint.frictionTorque = 3.0;
+        chuckJoint.lowerAngleLimit = -M_PI;
+        chuckJoint.upperAngleLimit = M_PI;
+        chuckJoint.frictionTorque = 0.0;
         SKPhysicsWorld *world = [self physicsWorld];
         [world addJoint:chuckJoint];
     }
-    self.mouseWasMoving = NO;
-    [self.mouseNode removeFromParent];
+    else
+    {
+        [self.mouseNode removeFromParent];
+    }
 }
 
 -(void)mouseDragged:(NSEvent *)theEvent
 {
     CGPoint location = [theEvent locationInNode:self];
     self.mouseNode.position = location;
-    self.mouseWasMoving = YES;
+    if (![self.mouseNode parent])
+    {
+        [self addChild:self.mouseNode];
+    }
 }
 
 -(void)update:(CFTimeInterval)currentTime
