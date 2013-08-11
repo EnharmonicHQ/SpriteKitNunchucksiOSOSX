@@ -11,7 +11,8 @@
 
 static const uint32_t edgeCategory = 0x1 << 1;
 static const uint32_t shuttlecraftCategory = 0x1 << 2;
-static const uint32_t mouseCategory = 0x1 << 3;
+static const uint32_t chuckCategory = 0x1 << 3;
+static const uint32_t mouseCategory = 0x1 << 4;
 
 
 @interface ENHMyScene () <SKPhysicsContactDelegate>
@@ -97,7 +98,29 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
     [self wiggleStuff];
 }
 
--(SKSpriteNode *)makeShuttlecraftAtLocation:(CGPoint)location
+-(SKNode *)makeNunchuckAtLocation:(CGPoint)location withBackgroundColor:(SKColor *)backgroundColor withStrokeColor:(SKColor *)strokeColor
+{
+    SKShapeNode *chuck = [SKShapeNode node];
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    CGRect chuckRect = CGRectMake(0, 0, 110, 20);
+    CGPathRef path = CGPathCreateWithRect(chuckRect, &transform);
+    chuck.path = path;
+    chuck.fillColor = backgroundColor;
+    chuck.strokeColor = strokeColor;
+    chuck.lineWidth = 2.0f;
+    chuck.position = location;
+
+    SKPhysicsBody *chuckBody = [SKPhysicsBody bodyWithRectangleOfSize:chuckRect.size];
+    chuckBody.categoryBitMask = chuckCategory;
+    chuckBody.mass = 1;
+    chuckBody.restitution = 0.0f; //bouncy bouncy
+    chuckBody.linearDamping = 0.0f; //friction
+    chuckBody.collisionBitMask = chuckCategory | shuttlecraftCategory | mouseCategory | edgeCategory;
+    chuck.physicsBody = chuckBody;
+    return chuck;
+}
+
+-(SKNode *)makeShuttlecraftAtLocation:(CGPoint)location
 {
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
 
@@ -119,7 +142,6 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
 -(void)mouseDown:(NSEvent *)theEvent
 {
     CGPoint location = [theEvent locationInNode:self];
-
     self.mouseNode.position = location;
     [self addChild:self.mouseNode];
 }
@@ -130,9 +152,25 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
     if (!self.mouseWasMoving)
     {
         CGPoint location = [theEvent locationInNode:self];
-        SKSpriteNode *sprite = [self makeShuttlecraftAtLocation:location];
-        [self addChild:sprite];
-        [self addChild:self.mouseNode];
+        SKNode *spriteOne = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor greenColor] withStrokeColor:[SKColor blackColor]];
+        location.x += spriteOne.frame.size.width;
+        SKNode *spriteTwo = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor redColor] withStrokeColor:[SKColor blackColor]];
+        [self addChild:spriteOne];
+        [self addChild:spriteTwo];
+        SKPhysicsJointPin *chuckJoint = [SKPhysicsJointPin jointWithBodyA:spriteOne.physicsBody bodyB:spriteTwo.physicsBody anchor:location];
+        /*
+         @property (SK_NONATOMIC_IOSONLY) BOOL shouldEnableLimits;
+         @property (SK_NONATOMIC_IOSONLY) CGFloat lowerAngleLimit;
+         @property (SK_NONATOMIC_IOSONLY) CGFloat upperAngleLimit;
+         @property (SK_NONATOMIC_IOSONLY) CGFloat frictionTorque;
+         */
+        chuckJoint.shouldEnableLimits = YES;
+        CGFloat angle = 165.0f;
+        chuckJoint.lowerAngleLimit = 0.0f - (2.0f * M_PI * angle/360.0f);
+        chuckJoint.upperAngleLimit = 0.0f + (2.0f * M_PI * angle/360.0f);
+        chuckJoint.frictionTorque = 3.0;
+        SKPhysicsWorld *world = [self physicsWorld];
+        [world addJoint:chuckJoint];
     }
     self.mouseWasMoving = NO;
     [self.mouseNode removeFromParent];
