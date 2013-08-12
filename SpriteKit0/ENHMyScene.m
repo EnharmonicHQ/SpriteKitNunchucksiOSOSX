@@ -74,27 +74,33 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
     return myRandf() * (high - low) + low;
 }
 
--(void)wiggleStuff
+-(void)wiggleStuffWithMagnitude:(CGFloat)magnitude
 {
     NSArray *nodes = [self children];
     for (SKNode *node in nodes)
     {
         SKPhysicsBody *physicsBody = node.physicsBody;
 
-        CGFloat dx = myRand(-1000, 1000);
-        CGFloat dy = myRand(0, 1000*9.8);
+        CGFloat dx = myRand(-magnitude, magnitude);
+        CGFloat dy = myRand(0, magnitude * 9.8); //Favor "up..." against gravity.
         
         CGVector impulseVector = CGVectorMake(dx, dy);
         [physicsBody applyImpulse:impulseVector];
 
-        CGFloat angularImpulse = myRand(-M_PI_4, M_PI_4);
+        CGFloat multiplier = 1.0f;
+        if (magnitude < 100.0f)
+        {
+            //spin less at low magnitude (e.g.when clicking)
+            multiplier *= (magnitude / 100.0f);
+        }
+        CGFloat angularImpulse = myRand(-M_PI_2 * multiplier, M_PI_2 * multiplier);
         [physicsBody applyAngularImpulse:angularImpulse];
     }
 }
 
 - (void)keyDown:(NSEvent *)theEvent;
 {
-    [self wiggleStuff];
+    [self wiggleStuffWithMagnitude:300.0f];
 }
 
 -(SKNode *)makeNunchuckAtLocation:(CGPoint)location withBackgroundColor:(SKColor *)backgroundColor withStrokeColor:(SKColor *)strokeColor
@@ -143,19 +149,27 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
     if (![self.mouseNode parent])
     {
         CGPoint location = [theEvent locationInNode:self];
-        SKNode *spriteOne = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor greenColor] withStrokeColor:[SKColor blackColor]];
-        location.x += spriteOne.frame.size.width;
-        SKNode *spriteTwo = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor redColor] withStrokeColor:[SKColor blackColor]];
-        [self addChild:spriteOne];
-        [self addChild:spriteTwo];
-        SKPhysicsJointPin *chuckJoint = [SKPhysicsJointPin jointWithBodyA:spriteOne.physicsBody bodyB:spriteTwo.physicsBody anchor:location];
-
-        chuckJoint.shouldEnableLimits = YES;
-        chuckJoint.lowerAngleLimit = -M_PI;
-        chuckJoint.upperAngleLimit = M_PI;
-        chuckJoint.frictionTorque = 0.0;
-        SKPhysicsWorld *world = [self physicsWorld];
-        [world addJoint:chuckJoint];
+        if(myRand(0.0f, 1.0f) < 0.5)
+        {
+            SKNode *spriteOne = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor greenColor] withStrokeColor:[SKColor blackColor]];
+            location.x += spriteOne.frame.size.width;
+            SKNode *spriteTwo = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor redColor] withStrokeColor:[SKColor blackColor]];
+            [self addChild:spriteOne];
+            [self addChild:spriteTwo];
+            SKPhysicsJointPin *chuckJoint = [SKPhysicsJointPin jointWithBodyA:spriteOne.physicsBody bodyB:spriteTwo.physicsBody anchor:location];
+            
+            chuckJoint.shouldEnableLimits = YES;
+            chuckJoint.lowerAngleLimit = -M_PI;
+            chuckJoint.upperAngleLimit = M_PI;
+            chuckJoint.frictionTorque = 0.2;
+            SKPhysicsWorld *world = [self physicsWorld];
+            [world addJoint:chuckJoint];
+        }
+           else
+        {
+            [self makeShuttlecraftAtLocation:location];
+        }
+        [self wiggleStuffWithMagnitude:40.0f];
     }
     else
     {
