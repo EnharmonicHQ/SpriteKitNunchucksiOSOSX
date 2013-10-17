@@ -1,6 +1,6 @@
 //
 //  ENHMyScene.h
-//  SpriteKit0
+//  SpriteKitiOS
 //
 
 //  Copyright (c) 2013 Enharmonic. All rights reserved.
