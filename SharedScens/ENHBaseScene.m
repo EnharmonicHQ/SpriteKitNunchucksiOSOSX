@@ -6,21 +6,21 @@
 //  Copyright (c) 2013 Enharmonic. All rights reserved.
 //
 
-#import "ENHScene.h"
-#import "ENHSceneProtected.h"
+#import "ENHBaseScene.h"
+#import "ENHBaseSceneProtected.h"
 
 static const uint32_t edgeCategory = 0x1 << 1;
 static const uint32_t chuckCategory = 0x1 << 2;
 static const uint32_t mouseCategory = 0x1 << 3;
 
-@interface ENHScene () <SKPhysicsContactDelegate>
+@interface ENHBaseScene () <SKPhysicsContactDelegate>
 
 @property BOOL contentCreated;
 @property SKNode *mouseNode;
 
 @end
 
-@implementation ENHScene
+@implementation ENHBaseScene
 
 -(id)initWithSize:(CGSize)size
 {

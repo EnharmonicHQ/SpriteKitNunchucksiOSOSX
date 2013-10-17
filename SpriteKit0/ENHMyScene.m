@@ -7,7 +7,7 @@
 //
 
 #import "ENHMyScene.h"
-#import "ENHSceneProtected.h"
+#import "ENHBaseSceneProtected.h"
 
 @implementation ENHMyScene
 

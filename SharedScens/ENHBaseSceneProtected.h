@@ -1,12 +1,12 @@
 //
-//  ENHSceneProtected.h
+//  ENHBaseSceneProtected.h
 //  SpriteKit0
 //
 //  Created by Jonathan Saggau on 10/17/13.
 //  Copyright (c) 2013 Enharmonic. All rights reserved.
 //
 
-@interface ENHScene (protected_methods)
+@interface ENHBaseScene (protected_methods)
 
 @property SKSpriteNode *mouseNode;
 

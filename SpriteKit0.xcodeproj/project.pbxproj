@@ -19,8 +19,8 @@
 		AB84B3B2180F9C65005A158B /* ENHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3B1180F9C65005A158B /* ENHViewController.m */; };
 		AB84B3B5180F9C65005A158B /* ENHMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3B4180F9C65005A158B /* ENHMyScene.m */; };
 		AB84B3B9180F9C65005A158B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB84B3B8180F9C65005A158B /* Images.xcassets */; };
-		AB84B3D4180F9CC7005A158B /* ENHScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3D3180F9CC7005A158B /* ENHScene.m */; };
-		AB84B3D6180F9D4C005A158B /* ENHScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3D3180F9CC7005A158B /* ENHScene.m */; };
+		AB84B3D4180F9CC7005A158B /* ENHBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */; };
+		AB84B3D6180F9D4C005A158B /* ENHBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */; };
 		ABFDC71817B66ED500B99CEF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFDC71717B66ED500B99CEF /* Cocoa.framework */; };
 		ABFDC71A17B66ED500B99CEF /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFDC71917B66ED500B99CEF /* SpriteKit.framework */; };
 		ABFDC72417B66ED500B99CEF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABFDC72217B66ED500B99CEF /* InfoPlist.strings */; };
@@ -50,9 +50,9 @@
 		AB84B3B3180F9C65005A158B /* ENHMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHMyScene.h; sourceTree = "<group>"; };
 		AB84B3B4180F9C65005A158B /* ENHMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ENHMyScene.m; sourceTree = "<group>"; };
 		AB84B3B8180F9C65005A158B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		AB84B3D2180F9CC7005A158B /* ENHScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENHScene.h; path = SharedScens/ENHScene.h; sourceTree = "<group>"; };
-		AB84B3D3180F9CC7005A158B /* ENHScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHScene.m; path = SharedScens/ENHScene.m; sourceTree = "<group>"; };
-		AB84B3D7180F9DD6005A158B /* ENHSceneProtected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHSceneProtected.h; sourceTree = "<group>"; };
+		AB84B3D2180F9CC7005A158B /* ENHBaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENHBaseScene.h; path = SharedScens/ENHBaseScene.h; sourceTree = "<group>"; };
+		AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHBaseScene.m; path = SharedScens/ENHBaseScene.m; sourceTree = "<group>"; };
+		AB84B3D8181043D2005A158B /* ENHBaseSceneProtected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ENHBaseSceneProtected.h; path = SharedScens/ENHBaseSceneProtected.h; sourceTree = "<group>"; };
 		ABFDC71417B66ED500B99CEF /* SpriteKit0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKit0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABFDC71717B66ED500B99CEF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		ABFDC71917B66ED500B99CEF /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
@@ -128,9 +128,9 @@
 		AB84B3D5180F9CCF005A158B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				AB84B3D7180F9DD6005A158B /* ENHSceneProtected.h */,
-				AB84B3D3180F9CC7005A158B /* ENHScene.m */,
-				AB84B3D2180F9CC7005A158B /* ENHScene.h */,
+				AB84B3D8181043D2005A158B /* ENHBaseSceneProtected.h */,
+				AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */,
+				AB84B3D2180F9CC7005A158B /* ENHBaseScene.h */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -301,7 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB84B3D6180F9D4C005A158B /* ENHScene.m in Sources */,
+				AB84B3D6180F9D4C005A158B /* ENHBaseScene.m in Sources */,
 				AB84B3A9180F9C65005A158B /* ENHAppDelegate.m in Sources */,
 				AB84B3A5180F9C65005A158B /* main.m in Sources */,
 				AB84B3B5180F9C65005A158B /* ENHMyScene.m in Sources */,
@@ -315,7 +315,7 @@
 			files = (
 				ABFDC72E17B66ED500B99CEF /* ENHMyScene.m in Sources */,
 				ABFDC73117B66ED500B99CEF /* ENHAppDelegate.m in Sources */,
-				AB84B3D4180F9CC7005A158B /* ENHScene.m in Sources */,
+				AB84B3D4180F9CC7005A158B /* ENHBaseScene.m in Sources */,
 				ABFDC72617B66ED500B99CEF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

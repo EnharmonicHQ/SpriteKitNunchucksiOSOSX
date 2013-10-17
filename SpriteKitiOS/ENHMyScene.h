@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Enharmonic. All rights reserved.
 //
 
-#import "ENHScene.h"
+#import "ENHBaseScene.h"
 
-@interface ENHMyScene : ENHScene
+@interface ENHMyScene : ENHBaseScene
 
 @end
