@@ -10,9 +10,8 @@
 
 
 static const uint32_t edgeCategory = 0x1 << 1;
-static const uint32_t shuttlecraftCategory = 0x1 << 2;
-static const uint32_t chuckCategory = 0x1 << 3;
-static const uint32_t mouseCategory = 0x1 << 4;
+static const uint32_t chuckCategory = 0x1 << 2;
+static const uint32_t mouseCategory = 0x1 << 3;
 
 
 @interface ENHMyScene () <SKPhysicsContactDelegate>
@@ -33,6 +32,7 @@ static const uint32_t mouseCategory = 0x1 << 4;
     return self;
 }
 
+static const BOOL showMouseNode = YES;
 -(void)createSceneContents
 {
     self.scaleMode = SKSceneScaleModeAspectFit;
@@ -42,16 +42,16 @@ static const uint32_t mouseCategory = 0x1 << 4;
     self.physicsBody.categoryBitMask = edgeCategory;
     self.physicsBody.collisionBitMask = 0;
     self.physicsBody.contactTestBitMask = 0;
-    self.physicsWorld.gravity = (CGPoint) {0.0f, -9.8f};
+    self.physicsWorld.gravity = (CGVector) {.dx = 0.0f, .dy = -9.8f};
     self.physicsWorld.contactDelegate = self;
 
-    CGSize mouseSize = CGSizeMake(120.f, 120.f);
-    self.mouseNode = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:mouseSize];
+    CGSize mouseSize = (CGSize) {120.f, 120.f};
+    self.mouseNode = [SKSpriteNode spriteNodeWithColor:showMouseNode ? [[SKColor lightGrayColor] colorWithAlphaComponent:0.5]:[SKColor clearColor] size:mouseSize];
     SKPhysicsBody *spriteBody = [SKPhysicsBody bodyWithRectangleOfSize:mouseSize];
     spriteBody.categoryBitMask = mouseCategory;
     spriteBody.mass = 2;
     spriteBody.restitution = 0.0f; //bouncy bouncy
-    spriteBody.collisionBitMask = shuttlecraftCategory;
+    spriteBody.collisionBitMask = mouseCategory;
     spriteBody.affectedByGravity = NO;
     self.mouseNode.physicsBody = spriteBody;
 }
@@ -76,15 +76,16 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
 
 -(void)wiggleStuffWithMagnitude:(CGFloat)magnitude
 {
-    NSArray *nodes = [self children];
+    NSMutableArray *nodes = [[self children] mutableCopy];
+    [nodes removeObjectIdenticalTo:self.mouseNode]; //keep from wiggling the mouse node
     for (SKNode *node in nodes)
     {
         SKPhysicsBody *physicsBody = node.physicsBody;
 
         CGFloat dx = myRand(-magnitude, magnitude);
         CGFloat dy = myRand(0, magnitude * 9.8); //Favor "up..." against gravity.
-        
-        CGVector impulseVector = CGVectorMake(dx, dy);
+
+        CGVector impulseVector = (CGVector) {.dx = dx, .dy = dy};
         [physicsBody applyImpulse:impulseVector];
 
         CGFloat multiplier = 1.0f;
@@ -107,7 +108,7 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
 {
     SKShapeNode *chuck = [SKShapeNode node];
     CGAffineTransform transform = CGAffineTransformIdentity;
-    CGRect chuckRect = CGRectMake(0, 0, 110, 20);
+    CGRect chuckRect = (CGRect) {{.x = 0.0, .y = 0.0}, {.width = 110, .height = 20}};
     CGPathRef path = CGPathCreateWithRect(chuckRect, &transform);
     chuck.path = path;
     chuck.fillColor = backgroundColor;
@@ -120,55 +121,30 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
     chuckBody.mass = 1;
     chuckBody.restitution = 0.0f; //bouncy bouncy
     chuckBody.linearDamping = 0.0f; //friction
-    chuckBody.collisionBitMask = chuckCategory | shuttlecraftCategory | mouseCategory | edgeCategory;
+    chuckBody.collisionBitMask = chuckCategory | mouseCategory | edgeCategory;
     chuck.physicsBody = chuckBody;
     return chuck;
-}
-
--(SKNode *)makeShuttlecraftAtLocation:(CGPoint)location
-{
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
-
-    sprite.position = location;
-    sprite.scale = 0.25f;
-    CGSize spriteSize = [sprite size];
-
-    SKPhysicsBody *spriteBody = [SKPhysicsBody bodyWithRectangleOfSize:spriteSize];
-    spriteBody.categoryBitMask = shuttlecraftCategory;
-    spriteBody.collisionBitMask = shuttlecraftCategory | mouseCategory | edgeCategory; //collide with edge of scene and other shuttlecraft
-    spriteBody.contactTestBitMask = shuttlecraftCategory | mouseCategory; //Let us know when a shuttlecraft collides with another only (add | edgeCategory to get notifications at edge, too)
-    spriteBody.mass = 1;
-    spriteBody.restitution = .45f; //bouncy bouncy
-    spriteBody.linearDamping = 0.3f; //friction
-    sprite.physicsBody = spriteBody;
-    return sprite;
 }
 
 -(void)mouseUp:(NSEvent *)theEvent
 {
     if (![self.mouseNode parent])
     {
+        //Make a new chuck if the mouse wasn't dragging around (mouse node has no parent)
         CGPoint location = [theEvent locationInNode:self];
-        if(myRand(0.0f, 1.0f) < 0.5)
-        {
-            SKNode *spriteOne = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor greenColor] withStrokeColor:[SKColor blackColor]];
-            location.x += spriteOne.frame.size.width;
-            SKNode *spriteTwo = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor redColor] withStrokeColor:[SKColor blackColor]];
-            [self addChild:spriteOne];
-            [self addChild:spriteTwo];
-            SKPhysicsJointPin *chuckJoint = [SKPhysicsJointPin jointWithBodyA:spriteOne.physicsBody bodyB:spriteTwo.physicsBody anchor:location];
-            
-            chuckJoint.shouldEnableLimits = YES;
-            chuckJoint.lowerAngleLimit = -M_PI;
-            chuckJoint.upperAngleLimit = M_PI;
-            chuckJoint.frictionTorque = 0.2;
-            SKPhysicsWorld *world = [self physicsWorld];
-            [world addJoint:chuckJoint];
-        }
-           else
-        {
-            [self makeShuttlecraftAtLocation:location];
-        }
+        SKNode *spriteOne = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor greenColor] withStrokeColor:[SKColor blackColor]];
+        location.x += spriteOne.frame.size.width;
+        SKNode *spriteTwo = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor redColor] withStrokeColor:[SKColor blackColor]];
+        [self addChild:spriteOne];
+        [self addChild:spriteTwo];
+        SKPhysicsJointPin *chuckJoint = [SKPhysicsJointPin jointWithBodyA:spriteOne.physicsBody bodyB:spriteTwo.physicsBody anchor:location];
+
+        chuckJoint.shouldEnableLimits = YES;
+        chuckJoint.lowerAngleLimit = -M_PI;
+        chuckJoint.upperAngleLimit = M_PI;
+        chuckJoint.frictionTorque = 0.2;
+        SKPhysicsWorld *world = [self physicsWorld];
+        [world addJoint:chuckJoint];
         [self wiggleStuffWithMagnitude:40.0f];
     }
     else
@@ -179,6 +155,7 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
 
 -(void)mouseDragged:(NSEvent *)theEvent
 {
+    //Move the clear mouse node around
     CGPoint location = [theEvent locationInNode:self];
     self.mouseNode.position = location;
     if (![self.mouseNode parent])
@@ -197,17 +174,18 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
 NSString *enhSpecialPhysicsContactDescription(SKPhysicsContact *physicsThing)
 {
     return [[physicsThing description] stringByAppendingFormat:@"\n     bodyA:%@\n     bodyB:%@\n     contactPoint:%@\n     collisionImpulse:%@",
-     physicsThing.bodyA, physicsThing.bodyB, NSStringFromPoint((NSPoint)physicsThing.contactPoint), @(physicsThing.collisionImpulse)];
+            physicsThing.bodyA, physicsThing.bodyB, NSStringFromPoint((NSPoint)physicsThing.contactPoint), @(physicsThing.collisionImpulse)];
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact;
 {
-//    NSString *description = enhSpecialPhysicsContactDescription(contact);
+    //    Log this if you want to see when stuff collides
+    //    NSString *description = enhSpecialPhysicsContactDescription(contact);
 }
 
 - (void)didEndContact:(SKPhysicsContact *)contact;
 {
-//    NSString *description = enhSpecialPhysicsContactDescription(contact);
+    //    NSString *description = enhSpecialPhysicsContactDescription(contact);
 }
 
 

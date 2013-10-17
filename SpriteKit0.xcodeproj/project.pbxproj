@@ -15,7 +15,6 @@
 		ABFDC72C17B66ED500B99CEF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABFDC72B17B66ED500B99CEF /* MainMenu.xib */; };
 		ABFDC72E17B66ED500B99CEF /* ENHMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFDC72D17B66ED500B99CEF /* ENHMyScene.m */; };
 		ABFDC73117B66ED500B99CEF /* ENHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFDC73017B66ED500B99CEF /* ENHAppDelegate.m */; };
-		ABFDC73417B66ED500B99CEF /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = ABFDC73317B66ED500B99CEF /* Spaceship.png */; };
 		ABFDC73617B66ED500B99CEF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFDC73517B66ED500B99CEF /* Images.xcassets */; };
 		ABFDC73D17B66ED500B99CEF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFDC73C17B66ED500B99CEF /* XCTest.framework */; };
 		ABFDC73E17B66ED500B99CEF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFDC71717B66ED500B99CEF /* Cocoa.framework */; };
@@ -50,7 +49,6 @@
 		ABFDC72F17B66ED500B99CEF /* ENHMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHMyScene.h; sourceTree = "<group>"; };
 		ABFDC73017B66ED500B99CEF /* ENHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ENHAppDelegate.m; sourceTree = "<group>"; };
 		ABFDC73217B66ED500B99CEF /* ENHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHAppDelegate.h; sourceTree = "<group>"; };
-		ABFDC73317B66ED500B99CEF /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		ABFDC73517B66ED500B99CEF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ABFDC73B17B66ED500B99CEF /* SpriteKit0Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpriteKit0Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABFDC73C17B66ED500B99CEF /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -129,7 +127,6 @@
 				ABFDC72F17B66ED500B99CEF /* ENHMyScene.h */,
 				ABFDC73017B66ED500B99CEF /* ENHAppDelegate.m */,
 				ABFDC73217B66ED500B99CEF /* ENHAppDelegate.h */,
-				ABFDC73317B66ED500B99CEF /* Spaceship.png */,
 				ABFDC73517B66ED500B99CEF /* Images.xcassets */,
 				ABFDC72017B66ED500B99CEF /* Supporting Files */,
 			);
@@ -242,7 +239,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABFDC73417B66ED500B99CEF /* Spaceship.png in Resources */,
 				ABFDC73617B66ED500B99CEF /* Images.xcassets in Resources */,
 				ABFDC72417B66ED500B99CEF /* InfoPlist.strings in Resources */,
 				ABFDC72A17B66ED500B99CEF /* Credits.rtf in Resources */,
@@ -474,6 +470,7 @@
 				ABFDC74D17B66ED500B99CEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ABFDC74E17B66ED500B99CEF /* Build configuration list for PBXNativeTarget "SpriteKit0Tests" */ = {
 			isa = XCConfigurationList;
@@ -482,6 +479,7 @@
 				ABFDC75017B66ED500B99CEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
