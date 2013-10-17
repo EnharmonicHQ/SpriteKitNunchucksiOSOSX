@@ -45,7 +45,7 @@ static const BOOL showMouseNode = YES;
     self.physicsWorld.contactDelegate = self;
 #if TARGET_OS_IPHONE
     CGSize mouseSize = (CGSize) {24.f, 24.f};
-#elif TARGET_OS_TARGET_OS_MAC
+#else
     CGSize mouseSize = (CGSize) {120.f, 120.f};
 #endif
     self.mouseNode = [SKSpriteNode spriteNodeWithColor:showMouseNode ? [[SKColor lightGrayColor] colorWithAlphaComponent:0.5]:[SKColor clearColor] size:mouseSize];
@@ -109,7 +109,7 @@ static inline CGFloat myRand(CGFloat low, CGFloat high) {
     CGFloat width = 44.0f;
     CGFloat height = 8.0f;
     CGFloat lineWidth = 1.0f;
-#elif TARGET_OS_TARGET_OS_MAC
+#else
     CGFloat width = 110.0f;
     CGFloat height = 20.0f;
     CGFloat lineWidth = 2.0f;
