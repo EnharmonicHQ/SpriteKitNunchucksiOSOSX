@@ -13,6 +13,15 @@ static const uint32_t edgeCategory = 0x1 << 1;
 static const uint32_t chuckCategory = 0x1 << 2;
 static const uint32_t mouseCategory = 0x1 << 3;
 
+// Useful random functions.
+inline CGFloat myRandf() {
+    return rand() / (CGFloat) RAND_MAX;
+}
+
+inline CGFloat myRand(CGFloat low, CGFloat high) {
+    return myRandf() * (high - low) + low;
+}
+
 @interface ENHBaseScene () <SKPhysicsContactDelegate>
 
 @property BOOL contentCreated;
@@ -65,15 +74,6 @@ static const BOOL showMouseNode = YES;
         [self createSceneContents];
         self.contentCreated = YES;
     }
-}
-
-// Useful random functions.
-static inline CGFloat myRandf() {
-    return rand() / (CGFloat) RAND_MAX;
-}
-
-static inline CGFloat myRand(CGFloat low, CGFloat high) {
-    return myRandf() * (high - low) + low;
 }
 
 -(void)wiggleStuffWithMagnitude:(CGFloat)magnitude

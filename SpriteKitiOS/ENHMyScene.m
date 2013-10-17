@@ -8,6 +8,13 @@
 
 #import "ENHMyScene.h"
 #import "ENHBaseSceneProtected.h"
+#import <CoreMotion/CoreMotion.h>
+
+@interface ENHMyScene ()
+
+@property(nonatomic, retain)CMMotionManager *motionManager;
+
+@end
 
 @implementation ENHMyScene
 
@@ -16,8 +23,56 @@
     if (self = [super initWithSize:size])
     {
         self.backgroundColor = [SKColor colorWithRed:0.15f green:0.15f blue:0.3f alpha:1.0f];
+        self.motionManager = [[CMMotionManager alloc] init];
+        if (self.motionManager.isDeviceMotionAvailable)
+        {
+            [self.motionManager startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXArbitraryZVertical];
+        }
+        else
+        {
+            self.motionManager = nil;
+        }
     }
     return self;
+}
+
+- (void)update:(NSTimeInterval)currentTime
+{
+    [super update:currentTime];
+    if (self.motionManager != nil && self.motionManager.isDeviceMotionActive)
+    {
+        CMDeviceMotion *deviceMotion = [self.motionManager deviceMotion];
+        CMAcceleration gravity = deviceMotion.gravity;
+//        NSLog(@"Gravity.x = %f Gravity.y = %f Gravity.z = %f", gravity.x, gravity.y, gravity.z);
+        self.physicsWorld.gravity = (CGVector) {.dx = gravity.x * 9.8, .dy = gravity.y * 9.8};
+    }
+}
+
+-(void)wiggleStuffWithMagnitude:(CGFloat)magnitude
+{
+    NSMutableArray *nodes = [[self children] mutableCopy];
+    [nodes removeObjectIdenticalTo:self.mouseNode]; //keep from wiggling the mouse node
+    for (SKNode *node in nodes)
+    {
+        SKPhysicsBody *physicsBody = node.physicsBody;
+
+        CGVector gravity = self.physicsWorld.gravity;
+
+        CGFloat dx = myRand(-magnitude * gravity.dx, magnitude * gravity.dx);
+        CGFloat dy = myRand(-magnitude * gravity.dx, magnitude * gravity.dx);
+
+        CGVector impulseVector = (CGVector) {.dx = dx, .dy = dy};
+        [physicsBody applyImpulse:impulseVector];
+
+        CGFloat multiplier = 1.0f;
+        if (magnitude < 100.0f)
+        {
+            //spin less at low magnitude (e.g.when clicking)
+            multiplier *= (magnitude / 100.0f);
+        }
+        CGFloat angularImpulse = myRand(-M_PI_2 * multiplier, M_PI_2 * multiplier);
+        [physicsBody applyAngularImpulse:angularImpulse];
+    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)theEvent

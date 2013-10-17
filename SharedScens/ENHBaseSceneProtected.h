@@ -15,4 +15,8 @@
 
 NSString *enhSpecialPhysicsContactDescription(SKPhysicsContact *physicsThing);
 
+// Useful random functions.
+extern CGFloat myRandf();
+extern CGFloat myRand(CGFloat low, CGFloat high);
+
 @end
