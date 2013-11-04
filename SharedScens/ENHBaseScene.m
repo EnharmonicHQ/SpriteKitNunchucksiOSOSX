@@ -8,6 +8,10 @@
 
 #import "ENHBaseScene.h"
 #import "ENHBaseSceneProtected.h"
+#import "ENHSKTextureMetadata.h"
+#if !TARGET_OS_IPHONE
+#import <AppKit/AppKit.h>
+#endif
 
 static const uint32_t edgeCategory = 0x1 << 1;
 static const uint32_t chuckCategory = 0x1 << 2;
@@ -22,10 +26,31 @@ inline CGFloat myRand(CGFloat low, CGFloat high) {
     return myRandf() * (high - low) + low;
 }
 
+static inline void enhPushGraphicsContext(CGContextRef context)
+{
+#if TARGET_OS_IPHONE
+    UIGraphicsPushContext(context);
+#else
+    [NSGraphicsContext saveGraphicsState];
+    NSGraphicsContext *graphicsContext = [NSGraphicsContext graphicsContextWithGraphicsPort:context flipped:YES];
+    [NSGraphicsContext setCurrentContext:graphicsContext];
+#endif
+}
+
+static inline void enhPopGraphicContext()
+{
+#if TARGET_OS_IPHONE
+    UIGraphicsPopContext();
+#else
+    [NSGraphicsContext restoreGraphicsState];
+#endif
+}
+
 @interface ENHBaseScene () <SKPhysicsContactDelegate>
 
 @property BOOL contentCreated;
 @property SKNode *mouseNode;
+@property NSMutableArray *textureArray;
 
 @end
 
@@ -36,8 +61,76 @@ inline CGFloat myRand(CGFloat low, CGFloat high) {
     if (self = [super initWithSize:size])
     {
         self.backgroundColor = [SKColor colorWithRed:0.15f green:0.15f blue:0.3f alpha:1.0f];
+        _textureArray = [NSMutableArray arrayWithCapacity:2];
     }
     return self;
+}
+
++(CGImageRef)rectangleImageWithSize:(CGSize)size
+                withBackgroundColor:(SKColor *)backgroundColor
+                    withStrokeColor:(SKColor *)strokeColor
+                    withStrokeWidth:(CGFloat)strokeWidth
+{
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(NULL, size.width, size.height, 8, size.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+
+    //Push the current graphics context (state) onto the stack
+    enhPushGraphicsContext(context);
+    CGRect rect = (CGRect){strokeWidth/2.0f, strokeWidth/2.0f, size.width - strokeWidth, size.height - strokeWidth};
+
+    //create a bezier path
+#if TARGET_OS_IPHONE
+    UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:rect];
+#else
+    NSBezierPath *rectanglePath = [NSBezierPath bezierPathWithRect:rect];
+#endif
+
+    //draw the rectangle
+    [backgroundColor setFill];
+    [rectanglePath fill];
+    [strokeColor setStroke];
+    rectanglePath.lineWidth = strokeWidth;
+    [rectanglePath stroke];
+
+    //Pop graphics context
+    enhPopGraphicContext();
+
+    //Make and return an image
+    CGImageRef image = CGBitmapContextCreateImage(context);
+    CGColorSpaceRelease(colorSpace);
+    CGContextRelease(context);
+    return image;
+}
+
+-(SKTexture *)textureWithSize:(CGSize)size
+          withBackgroundColor:(SKColor *)backgroundColor
+              withStrokeColor:(SKColor *)strokeColor
+              withStrokeWidth:(CGFloat)strokeWidth
+{
+    NSPredicate *textureInfoPredicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        ENHSKTextureMetadata *metadata = evaluatedObject;
+        BOOL equal = (CGSizeEqualToSize(size, metadata.size)
+                      && strokeWidth == metadata.strokeWidth
+                      && [strokeColor isEqual:metadata.strokeColor]
+                      && [backgroundColor isEqual:metadata.backgroundColor]);
+        return equal;
+    }];
+
+    NSArray *matchingTextureMetadata = [self.textureArray filteredArrayUsingPredicate:textureInfoPredicate];
+    ENHSKTextureMetadata *metadata = [matchingTextureMetadata firstObject];
+
+    if (metadata == nil || metadata.texture == nil)
+    {
+        CGImageRef image = [[self class] rectangleImageWithSize:size withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:strokeWidth];
+        SKTexture *texture = [SKTexture textureWithCGImage:image];
+        ENHSKTextureMetadata *metadata = [ENHSKTextureMetadata metadataWithTexture:texture
+                                                                              size:size
+                                                                   backgroundColor:backgroundColor
+                                                                       strokeColor:strokeColor
+                                                                       strokeWidth:strokeWidth];
+        [self.textureArray addObject:metadata];
+    }
+    return metadata.texture;
 }
 
 static const BOOL showMouseNode = NO;
@@ -52,11 +145,8 @@ static const BOOL showMouseNode = NO;
     self.physicsBody.contactTestBitMask = 0;
     self.physicsWorld.gravity = (CGVector) {.dx = 0.0f, .dy = -9.8f};
     self.physicsWorld.contactDelegate = self;
-#if TARGET_OS_IPHONE
-    CGSize mouseSize = (CGSize) {24.f, 24.f};
-#else
-    CGSize mouseSize = (CGSize) {120.f, 120.f};
-#endif
+    CGFloat mouseSquareWidthHeight = TARGET_OS_IPHONE ? 24.f : 120.f;
+    CGSize mouseSize = (CGSize) {mouseSquareWidthHeight, mouseSquareWidthHeight};
     self.mouseNode = [SKSpriteNode spriteNodeWithColor:showMouseNode ? [[SKColor lightGrayColor] colorWithAlphaComponent:0.5]:[SKColor clearColor] size:mouseSize];
     self.mouseNode.zPosition = 1.0f;
     SKPhysicsBody *spriteBody = [SKPhysicsBody bodyWithRectangleOfSize:mouseSize];
@@ -102,31 +192,6 @@ static const BOOL showMouseNode = NO;
     }
 }
 
-+(CGImageRef)rectangleImageWithSize:(CGSize)size
-               withBackgroundColor:(SKColor *)backgroundColor
-                   withStrokeColor:(SKColor *)strokeColor
-                   withStrokeWidth:(CGFloat)strokeWidth
-{
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(NULL, size.width, size.height, 8, size.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-
-    UIGraphicsPushContext(context);
-    {
-        UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(0.5, 0.5, 43, 7)];
-        [backgroundColor setFill];
-        [rectanglePath fill];
-        [strokeColor setStroke];
-        rectanglePath.lineWidth = strokeWidth;
-        [rectanglePath stroke];
-    } UIGraphicsPopContext();
-    CGImageRef image = CGBitmapContextCreateImage(context);
-    CGColorSpaceRelease(colorSpace);
-    CGContextRelease(context);
-
-    return image;
-}
-
-//+(SKTexture)
 
 -(SKNode *)makeNunchuckAtLocation:(CGPoint)location withBackgroundColor:(SKColor *)backgroundColor withStrokeColor:(SKColor *)strokeColor
 {
@@ -138,11 +203,15 @@ static const BOOL showMouseNode = NO;
 #else
     CGFloat width = 110.0f;
     CGFloat height = 20.0f;
-    CGFloat lineWidth = 2.0f;
+    CGFloat lineWidth = 4.0f;
 #endif
+
     CGSize chuckSize = (CGSize){.width=width, .height=height};
-    CGImageRef image = [[self class] rectangleImageWithSize:chuckSize withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:lineWidth];
-    SKTexture *texture = [SKTexture textureWithCGImage:image];
+    SKTexture *texture = [self textureWithSize:chuckSize
+                           withBackgroundColor:backgroundColor
+                               withStrokeColor:strokeColor
+                               withStrokeWidth:lineWidth];
+
     SKSpriteNode *chuck = [SKSpriteNode spriteNodeWithTexture:texture size:chuckSize];
     chuck.position = location;
     chuck.zPosition = 1.0f;
