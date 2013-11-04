@@ -1,0 +1,3 @@
+[submodule "Submodules/wiki"]
+	path = Submodules/wiki
+	url = git@bitbucket.org:jonmarimba/article-spritekit.git/wiki

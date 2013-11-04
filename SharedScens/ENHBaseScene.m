@@ -40,7 +40,7 @@ inline CGFloat myRand(CGFloat low, CGFloat high) {
     return self;
 }
 
-static const BOOL showMouseNode = YES;
+static const BOOL showMouseNode = NO;
 -(void)createSceneContents
 {
     self.scaleMode = SKSceneScaleModeAspectFit;
@@ -58,6 +58,7 @@ static const BOOL showMouseNode = YES;
     CGSize mouseSize = (CGSize) {120.f, 120.f};
 #endif
     self.mouseNode = [SKSpriteNode spriteNodeWithColor:showMouseNode ? [[SKColor lightGrayColor] colorWithAlphaComponent:0.5]:[SKColor clearColor] size:mouseSize];
+    self.mouseNode.zPosition = 1.0f;
     SKPhysicsBody *spriteBody = [SKPhysicsBody bodyWithRectangleOfSize:mouseSize];
     spriteBody.categoryBitMask = mouseCategory;
     spriteBody.mass = 2;
@@ -101,10 +102,35 @@ static const BOOL showMouseNode = YES;
     }
 }
 
++(CGImageRef)rectangleImageWithSize:(CGSize)size
+               withBackgroundColor:(SKColor *)backgroundColor
+                   withStrokeColor:(SKColor *)strokeColor
+                   withStrokeWidth:(CGFloat)strokeWidth
+{
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(NULL, size.width, size.height, 8, size.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+
+    UIGraphicsPushContext(context);
+    {
+        UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(0.5, 0.5, 43, 7)];
+        [backgroundColor setFill];
+        [rectanglePath fill];
+        [strokeColor setStroke];
+        rectanglePath.lineWidth = strokeWidth;
+        [rectanglePath stroke];
+    } UIGraphicsPopContext();
+    CGImageRef image = CGBitmapContextCreateImage(context);
+    CGColorSpaceRelease(colorSpace);
+    CGContextRelease(context);
+
+    return image;
+}
+
+//+(SKTexture)
+
 -(SKNode *)makeNunchuckAtLocation:(CGPoint)location withBackgroundColor:(SKColor *)backgroundColor withStrokeColor:(SKColor *)strokeColor
 {
-    SKShapeNode *chuck = [SKShapeNode node];
-    CGAffineTransform transform = CGAffineTransformIdentity;
+
 #if TARGET_OS_IPHONE
     CGFloat width = 44.0f;
     CGFloat height = 8.0f;
@@ -114,15 +140,14 @@ static const BOOL showMouseNode = YES;
     CGFloat height = 20.0f;
     CGFloat lineWidth = 2.0f;
 #endif
-    CGRect chuckRect = (CGRect) {{.x = 0.0, .y = 0.0}, {.width = width, .height = height}};
-    CGPathRef path = CGPathCreateWithRect(chuckRect, &transform);
-    chuck.path = path;
-    chuck.fillColor = backgroundColor;
-    chuck.strokeColor = strokeColor;
-    chuck.lineWidth = lineWidth;
+    CGSize chuckSize = (CGSize){.width=width, .height=height};
+    CGImageRef image = [[self class] rectangleImageWithSize:chuckSize withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:lineWidth];
+    SKTexture *texture = [SKTexture textureWithCGImage:image];
+    SKSpriteNode *chuck = [SKSpriteNode spriteNodeWithTexture:texture size:chuckSize];
     chuck.position = location;
+    chuck.zPosition = 1.0f;
 
-    SKPhysicsBody *chuckBody = [SKPhysicsBody bodyWithRectangleOfSize:chuckRect.size];
+    SKPhysicsBody *chuckBody = [SKPhysicsBody bodyWithRectangleOfSize:chuckSize];
     chuckBody.categoryBitMask = chuckCategory;
     chuckBody.mass = 1;
     chuckBody.restitution = 0.0f; //bouncy bouncy

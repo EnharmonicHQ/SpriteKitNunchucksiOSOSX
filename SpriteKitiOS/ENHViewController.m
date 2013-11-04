@@ -19,6 +19,8 @@
     SKView * skView = (SKView *)self.view;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
+    skView.ignoresSiblingOrder = YES;
+    skView.frameInterval = 2;
     
     // Create and configure the scene.
     SKScene * scene = [ENHMyScene sceneWithSize:skView.bounds.size];
