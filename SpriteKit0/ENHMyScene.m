@@ -27,11 +27,11 @@
         SKNode *spriteTwo = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor redColor] withStrokeColor:[SKColor blackColor]];
         [self addChild:spriteOne];
         [self addChild:spriteTwo];
+        location.x -= spriteOne.frame.size.width / 2.f;
+
         SKPhysicsJointPin *chuckJoint = [SKPhysicsJointPin jointWithBodyA:spriteOne.physicsBody bodyB:spriteTwo.physicsBody anchor:location];
 
         chuckJoint.shouldEnableLimits = YES;
-        chuckJoint.lowerAngleLimit = -M_PI;
-        chuckJoint.upperAngleLimit = M_PI;
         chuckJoint.frictionTorque = 0.2;
         SKPhysicsWorld *world = [self physicsWorld];
         [world addJoint:chuckJoint];
