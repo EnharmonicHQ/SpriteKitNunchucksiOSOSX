@@ -66,10 +66,10 @@ static inline void enhPopGraphicContext()
     return self;
 }
 
-+(CGImageRef)rectangleImageWithSize:(CGSize)size
-                withBackgroundColor:(SKColor *)backgroundColor
-                    withStrokeColor:(SKColor *)strokeColor
-                    withStrokeWidth:(CGFloat)strokeWidth
++(CGImageRef)newRectangleImageWithSize:(CGSize)size
+                   withBackgroundColor:(SKColor *)backgroundColor
+                       withStrokeColor:(SKColor *)strokeColor
+                       withStrokeWidth:(CGFloat)strokeWidth
 {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = CGBitmapContextCreate(NULL, size.width, size.height, 8, size.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
@@ -121,8 +121,9 @@ static inline void enhPopGraphicContext()
 
     if (metadata == nil || metadata.texture == nil)
     {
-        CGImageRef image = [[self class] rectangleImageWithSize:size withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:strokeWidth];
+        CGImageRef image = [[self class] newRectangleImageWithSize:size withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:strokeWidth];
         SKTexture *texture = [SKTexture textureWithCGImage:image];
+        CGImageRelease(image);
         ENHSKTextureMetadata *metadata = [ENHSKTextureMetadata metadataWithTexture:texture
                                                                               size:size
                                                                    backgroundColor:backgroundColor
