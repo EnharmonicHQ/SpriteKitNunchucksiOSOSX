@@ -2,7 +2,6 @@
 //  ENHAppDelegate.h
 //  SpriteKitiOS
 //
-//  Created by Jonathan Saggau on 10/17/13.
 //  Copyright (c) 2013 Enharmonic. All rights reserved.
 //
 

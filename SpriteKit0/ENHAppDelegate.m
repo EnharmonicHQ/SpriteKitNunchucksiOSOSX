@@ -1,8 +1,7 @@
 //
 //  ENHAppDelegate.m
-//  SpriteKit0
+//  SpriteKitMavericks
 //
-//  Created by Jonathan Saggau on 8/10/13.
 //  Copyright (c) 2013 Enharmonic. All rights reserved.
 //
 
@@ -28,7 +27,8 @@
     self.skView.showsNodeCount = YES;
 }
 
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+{
     return YES;
 }
 

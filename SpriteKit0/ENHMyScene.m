@@ -1,8 +1,7 @@
 //
 //  ENHMyScene.m
-//  SpriteKit0
+//  SpriteKitMavericks
 //
-//  Created by Jonathan Saggau on 8/10/13.
 //  Copyright (c) 2013 Enharmonic. All rights reserved.
 //
 

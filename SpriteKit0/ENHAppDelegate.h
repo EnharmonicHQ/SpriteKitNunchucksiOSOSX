@@ -1,6 +1,6 @@
 //
 //  ENHAppDelegate.h
-//  SpriteKit0
+//  SpriteKitMavericks
 //
 
 //  Copyright (c) 2013 Enharmonic. All rights reserved.
