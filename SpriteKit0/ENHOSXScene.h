@@ -8,6 +8,6 @@
 
 #import "ENHBaseScene.h"
 
-@interface ENHMyScene : ENHBaseScene
+@interface ENHOSXScene : ENHBaseScene
 
 @end

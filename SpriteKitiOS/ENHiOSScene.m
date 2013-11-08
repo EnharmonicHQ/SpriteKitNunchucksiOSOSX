@@ -5,17 +5,17 @@
 //  Copyright (c) 2013 Enharmonic. All rights reserved.
 //
 
-#import "ENHMyScene.h"
+#import "ENHiOSScene.h"
 #import "ENHBaseSceneProtected.h"
 #import <CoreMotion/CoreMotion.h>
 
-@interface ENHMyScene ()
+@interface ENHiOSScene ()
 
 @property(nonatomic, retain)CMMotionManager *motionManager;
 
 @end
 
-@implementation ENHMyScene
+@implementation ENHiOSScene
 
 -(id)initWithSize:(CGSize)size
 {

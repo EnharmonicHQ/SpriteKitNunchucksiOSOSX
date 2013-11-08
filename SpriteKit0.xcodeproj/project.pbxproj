@@ -17,7 +17,7 @@
 		AB84B3AC180F9C65005A158B /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB84B3AA180F9C65005A158B /* Main_iPhone.storyboard */; };
 		AB84B3AF180F9C65005A158B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB84B3AD180F9C65005A158B /* Main_iPad.storyboard */; };
 		AB84B3B2180F9C65005A158B /* ENHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3B1180F9C65005A158B /* ENHViewController.m */; };
-		AB84B3B5180F9C65005A158B /* ENHMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3B4180F9C65005A158B /* ENHMyScene.m */; };
+		AB84B3B5180F9C65005A158B /* ENHiOSScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3B4180F9C65005A158B /* ENHiOSScene.m */; };
 		AB84B3B9180F9C65005A158B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB84B3B8180F9C65005A158B /* Images.xcassets */; };
 		AB84B3D4180F9CC7005A158B /* ENHBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */; };
 		AB84B3D6180F9D4C005A158B /* ENHBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */; };
@@ -30,7 +30,7 @@
 		ABFDC72617B66ED500B99CEF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFDC72517B66ED500B99CEF /* main.m */; };
 		ABFDC72A17B66ED500B99CEF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = ABFDC72817B66ED500B99CEF /* Credits.rtf */; };
 		ABFDC72C17B66ED500B99CEF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABFDC72B17B66ED500B99CEF /* MainMenu.xib */; };
-		ABFDC72E17B66ED500B99CEF /* ENHMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFDC72D17B66ED500B99CEF /* ENHMyScene.m */; };
+		ABFDC72E17B66ED500B99CEF /* ENHOSXScene.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFDC72D17B66ED500B99CEF /* ENHOSXScene.m */; };
 		ABFDC73117B66ED500B99CEF /* ENHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFDC73017B66ED500B99CEF /* ENHAppDelegate.m */; };
 		ABFDC73617B66ED500B99CEF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFDC73517B66ED500B99CEF /* Images.xcassets */; };
 /* End PBXBuildFile section */
@@ -50,8 +50,8 @@
 		AB84B3AE180F9C65005A158B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		AB84B3B0180F9C65005A158B /* ENHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHViewController.h; sourceTree = "<group>"; };
 		AB84B3B1180F9C65005A158B /* ENHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ENHViewController.m; sourceTree = "<group>"; };
-		AB84B3B3180F9C65005A158B /* ENHMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHMyScene.h; sourceTree = "<group>"; };
-		AB84B3B4180F9C65005A158B /* ENHMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ENHMyScene.m; sourceTree = "<group>"; };
+		AB84B3B3180F9C65005A158B /* ENHiOSScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHiOSScene.h; sourceTree = "<group>"; };
+		AB84B3B4180F9C65005A158B /* ENHiOSScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ENHiOSScene.m; sourceTree = "<group>"; };
 		AB84B3B8180F9C65005A158B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AB84B3D2180F9CC7005A158B /* ENHBaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENHBaseScene.h; path = SharedScens/ENHBaseScene.h; sourceTree = "<group>"; };
 		AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHBaseScene.m; path = SharedScens/ENHBaseScene.m; sourceTree = "<group>"; };
@@ -71,8 +71,8 @@
 		ABFDC72717B66ED500B99CEF /* SpriteKit0-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpriteKit0-Prefix.pch"; sourceTree = "<group>"; };
 		ABFDC72917B66ED500B99CEF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		ABFDC72B17B66ED500B99CEF /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
-		ABFDC72D17B66ED500B99CEF /* ENHMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ENHMyScene.m; sourceTree = "<group>"; };
-		ABFDC72F17B66ED500B99CEF /* ENHMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHMyScene.h; sourceTree = "<group>"; };
+		ABFDC72D17B66ED500B99CEF /* ENHOSXScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ENHOSXScene.m; sourceTree = "<group>"; };
+		ABFDC72F17B66ED500B99CEF /* ENHOSXScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHOSXScene.h; sourceTree = "<group>"; };
 		ABFDC73017B66ED500B99CEF /* ENHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ENHAppDelegate.m; sourceTree = "<group>"; };
 		ABFDC73217B66ED500B99CEF /* ENHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHAppDelegate.h; sourceTree = "<group>"; };
 		ABFDC73517B66ED500B99CEF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -113,8 +113,8 @@
 				AB84B3AD180F9C65005A158B /* Main_iPad.storyboard */,
 				AB84B3B0180F9C65005A158B /* ENHViewController.h */,
 				AB84B3B1180F9C65005A158B /* ENHViewController.m */,
-				AB84B3B3180F9C65005A158B /* ENHMyScene.h */,
-				AB84B3B4180F9C65005A158B /* ENHMyScene.m */,
+				AB84B3B3180F9C65005A158B /* ENHiOSScene.h */,
+				AB84B3B4180F9C65005A158B /* ENHiOSScene.m */,
 				AB84B3B8180F9C65005A158B /* Images.xcassets */,
 				AB84B39F180F9C65005A158B /* Supporting Files */,
 			);
@@ -193,8 +193,8 @@
 			isa = PBXGroup;
 			children = (
 				ABFDC72B17B66ED500B99CEF /* MainMenu.xib */,
-				ABFDC72D17B66ED500B99CEF /* ENHMyScene.m */,
-				ABFDC72F17B66ED500B99CEF /* ENHMyScene.h */,
+				ABFDC72D17B66ED500B99CEF /* ENHOSXScene.m */,
+				ABFDC72F17B66ED500B99CEF /* ENHOSXScene.h */,
 				ABFDC73017B66ED500B99CEF /* ENHAppDelegate.m */,
 				ABFDC73217B66ED500B99CEF /* ENHAppDelegate.h */,
 				ABFDC73517B66ED500B99CEF /* Images.xcassets */,
@@ -316,7 +316,7 @@
 				AB84B3D6180F9D4C005A158B /* ENHBaseScene.m in Sources */,
 				AB84B3A9180F9C65005A158B /* ENHAppDelegate.m in Sources */,
 				AB84B3A5180F9C65005A158B /* main.m in Sources */,
-				AB84B3B5180F9C65005A158B /* ENHMyScene.m in Sources */,
+				AB84B3B5180F9C65005A158B /* ENHiOSScene.m in Sources */,
 				AB84B3B2180F9C65005A158B /* ENHViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,7 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABFDC72E17B66ED500B99CEF /* ENHMyScene.m in Sources */,
+				ABFDC72E17B66ED500B99CEF /* ENHOSXScene.m in Sources */,
 				ABFDC73117B66ED500B99CEF /* ENHAppDelegate.m in Sources */,
 				ABDB090218275EBE00AD4956 /* ENHSKTextureMetadata.m in Sources */,
 				AB84B3D4180F9CC7005A158B /* ENHBaseScene.m in Sources */,

@@ -192,7 +192,6 @@ static const BOOL showMouseNode = NO;
     }
 }
 
-
 -(SKNode *)makeNunchuckAtLocation:(CGPoint)location withBackgroundColor:(SKColor *)backgroundColor withStrokeColor:(SKColor *)strokeColor
 {
 

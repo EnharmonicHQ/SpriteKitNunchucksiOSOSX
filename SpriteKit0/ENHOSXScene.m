@@ -5,10 +5,10 @@
 //  Copyright (c) 2013 Enharmonic. All rights reserved.
 //
 
-#import "ENHMyScene.h"
+#import "ENHOSXScene.h"
 #import "ENHBaseSceneProtected.h"
 
-@implementation ENHMyScene
+@implementation ENHOSXScene
 
 - (void)keyDown:(NSEvent *)theEvent;
 {
@@ -30,7 +30,6 @@
 
         SKPhysicsJointPin *chuckJoint = [SKPhysicsJointPin jointWithBodyA:spriteOne.physicsBody bodyB:spriteTwo.physicsBody anchor:location];
 
-        chuckJoint.shouldEnableLimits = YES;
         chuckJoint.frictionTorque = 0.2;
         SKPhysicsWorld *world = [self physicsWorld];
         [world addJoint:chuckJoint];

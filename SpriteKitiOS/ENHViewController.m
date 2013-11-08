@@ -6,7 +6,7 @@
 //
 
 #import "ENHViewController.h"
-#import "ENHMyScene.h"
+#import "ENHiOSScene.h"
 
 @implementation ENHViewController
 
@@ -22,7 +22,7 @@
     skView.frameInterval = 2;
     
     // Create and configure the scene.
-    SKScene * scene = [ENHMyScene sceneWithSize:skView.bounds.size];
+    SKScene * scene = [ENHiOSScene sceneWithSize:skView.bounds.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     // Present the scene.

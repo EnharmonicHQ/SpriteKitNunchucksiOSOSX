@@ -6,7 +6,7 @@
 //
 
 #import "ENHAppDelegate.h"
-#import "ENHMyScene.h"
+#import "ENHOSXScene.h"
 
 @implementation ENHAppDelegate
 
@@ -15,7 +15,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     /* Pick a size for the scene */
-    SKScene *scene = [ENHMyScene sceneWithSize:CGSizeMake(1024, 768)];
+    SKScene *scene = [ENHOSXScene sceneWithSize:CGSizeMake(1024, 768)];
 
     /* Set the scale mode to scale to fit the window */
     scene.scaleMode = SKSceneScaleModeAspectFit;
