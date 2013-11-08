@@ -5,6 +5,7 @@
 //
 
 #ifdef __OBJC__
+    #import <AppKit/AppKit.h>
     #import <Cocoa/Cocoa.h>
     #import <SpriteKit/SpriteKit.h>
 #endif

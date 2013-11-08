@@ -8,48 +8,22 @@
 #import "ENHBaseScene.h"
 #import "ENHBaseSceneProtected.h"
 #import "ENHSKTextureMetadata.h"
-#if !TARGET_OS_IPHONE
-#import <AppKit/AppKit.h>
-#endif
+#import "ENHSimplifyingCoreGraphics.h"
 
 static const uint32_t edgeCategory = 0x1 << 1;
 static const uint32_t chuckCategory = 0x1 << 2;
 static const uint32_t mouseCategory = 0x1 << 3;
 
-// Useful random functions.
-inline CGFloat myRandf() {
+#pragma mark Useful random functions
+inline CGFloat myRandf()
+{
     return rand() / (CGFloat) RAND_MAX;
 }
 
-inline CGFloat myRand(CGFloat low, CGFloat high) {
+inline CGFloat myRand(CGFloat low, CGFloat high)
+{
     return myRandf() * (high - low) + low;
 }
-
-static inline void enhPushGraphicsContext(CGContextRef context)
-{
-#if TARGET_OS_IPHONE
-    UIGraphicsPushContext(context);
-#else
-    [NSGraphicsContext saveGraphicsState];
-    NSGraphicsContext *graphicsContext = [NSGraphicsContext graphicsContextWithGraphicsPort:context flipped:YES];
-    [NSGraphicsContext setCurrentContext:graphicsContext];
-#endif
-}
-
-static inline void enhPopGraphicContext()
-{
-#if TARGET_OS_IPHONE
-    UIGraphicsPopContext();
-#else
-    [NSGraphicsContext restoreGraphicsState];
-#endif
-}
-
-#if TARGET_OS_IPHONE
-#define ENHBezierPath UIBezierPath
-#else
-#define ENHBezierPath NSBezierPath
-#endif
 
 @interface ENHBaseScene () <SKPhysicsContactDelegate>
 
@@ -71,38 +45,6 @@ static inline void enhPopGraphicContext()
     return self;
 }
 
-+(CGImageRef)newRectangleImageWithSize:(CGSize)size
-                   withBackgroundColor:(SKColor *)backgroundColor
-                       withStrokeColor:(SKColor *)strokeColor
-                       withStrokeWidth:(CGFloat)strokeWidth
-{
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(NULL, size.width, size.height, 8, size.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-
-    //Push the current graphics context (state) onto the stack
-    enhPushGraphicsContext(context);
-    CGRect rect = (CGRect){strokeWidth/2.0f, strokeWidth/2.0f, size.width - strokeWidth, size.height - strokeWidth};
-
-    //create a bezier path
-    ENHBezierPath *rectanglePath = [ENHBezierPath bezierPathWithRect:rect];
-
-    //draw the rectangle
-    [backgroundColor setFill];
-    [rectanglePath fill];
-    [strokeColor setStroke];
-    rectanglePath.lineWidth = strokeWidth;
-    [rectanglePath stroke];
-
-    //Pop graphics context
-    enhPopGraphicContext();
-
-    //Make and return an image
-    CGImageRef image = CGBitmapContextCreateImage(context);
-    CGColorSpaceRelease(colorSpace);
-    CGContextRelease(context);
-    return image;
-}
-
 -(SKTexture *)textureWithSize:(CGSize)size
           withBackgroundColor:(SKColor *)backgroundColor
               withStrokeColor:(SKColor *)strokeColor
@@ -122,7 +64,7 @@ static inline void enhPopGraphicContext()
 
     if (metadata == nil || metadata.texture == nil)
     {
-        CGImageRef image = [[self class] newRectangleImageWithSize:size withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:strokeWidth];
+        CGImageRef image = [ENHSimplifyingCoreGraphics newRectangleImageWithSize:size withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:strokeWidth];
         SKTexture *texture = [SKTexture textureWithCGImage:image];
         CGImageRelease(image);
         ENHSKTextureMetadata *metadata = [ENHSKTextureMetadata metadataWithTexture:texture
