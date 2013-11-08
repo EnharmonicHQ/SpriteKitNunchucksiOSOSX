@@ -35,6 +35,8 @@ static inline void enhPopGraphicContext()
 #define ENHBezierPath NSBezierPath
 #endif
 
+#pragma mark - impl
+
 @implementation ENHSimplifyingCoreGraphics
 
 +(CGImageRef)newRectangleImageWithSize:(CGSize)size

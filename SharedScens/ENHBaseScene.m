@@ -14,7 +14,7 @@ static const uint32_t edgeCategory = 0x1 << 1;
 static const uint32_t chuckCategory = 0x1 << 2;
 static const uint32_t mouseCategory = 0x1 << 3;
 
-#pragma mark Useful random functions
+//Useful random functions
 inline CGFloat myRandf()
 {
     return rand() / (CGFloat) RAND_MAX;
