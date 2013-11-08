@@ -147,6 +147,7 @@ static const BOOL showMouseNode = NO;
     self.physicsBody.contactTestBitMask = 0;
     self.physicsWorld.gravity = (CGVector) {.dx = 0.0f, .dy = -9.8f};
     self.physicsWorld.contactDelegate = self;
+
     CGFloat mouseSquareWidthHeight = TARGET_OS_IPHONE ? 24.f : 120.f;
     CGSize mouseSize = (CGSize) {mouseSquareWidthHeight, mouseSquareWidthHeight};
     self.mouseNode = [SKSpriteNode spriteNodeWithColor:showMouseNode ? [[SKColor lightGrayColor] colorWithAlphaComponent:0.5]:[SKColor clearColor] size:mouseSize];
@@ -197,6 +198,7 @@ static const BOOL showMouseNode = NO;
 -(SKNode *)makeNunchuckAtLocation:(CGPoint)location withBackgroundColor:(SKColor *)backgroundColor withStrokeColor:(SKColor *)strokeColor
 {
 
+    //Little chucks on iPhone; bigger ones on OS X
 #if TARGET_OS_IPHONE
     CGFloat width = 44.0f;
     CGFloat height = 8.0f;
