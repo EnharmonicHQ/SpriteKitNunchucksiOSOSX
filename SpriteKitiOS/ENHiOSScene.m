@@ -119,10 +119,4 @@
     }
 }
 
-NSString *enhSpecialPhysicsContactDescription(SKPhysicsContact *physicsThing)
-{
-    return [[physicsThing description] stringByAppendingFormat:@"\n     bodyA:%@\n     bodyB:%@\n     contactPoint:%@\n     collisionImpulse:%@",
-            physicsThing.bodyA, physicsThing.bodyB, NSStringFromCGPoint(physicsThing.contactPoint), @(physicsThing.collisionImpulse)];
-}
-
 @end

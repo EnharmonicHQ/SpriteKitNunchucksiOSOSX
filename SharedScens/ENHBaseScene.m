@@ -146,7 +146,6 @@ static const BOOL showMouseNode = NO;
     self.physicsBody.collisionBitMask = 0;
     self.physicsBody.contactTestBitMask = 0;
     self.physicsWorld.gravity = (CGVector) {.dx = 0.0f, .dy = -9.8f};
-    self.physicsWorld.contactDelegate = self;
 
     CGFloat mouseSquareWidthHeight = TARGET_OS_IPHONE ? 24.f : 120.f;
     CGSize mouseSize = (CGSize) {mouseSquareWidthHeight, mouseSquareWidthHeight};
@@ -233,20 +232,6 @@ static const BOOL showMouseNode = NO;
 -(void)update:(CFTimeInterval)currentTime
 {
     /* Called before each frame is rendered */
-}
-
-#pragma mark - @protocol SKPhysicsContactDelegate<NSObject>
-
-
-- (void)didBeginContact:(SKPhysicsContact *)contact;
-{
-    //    Log this if you want to see when stuff collides
-    //    NSString *description = enhSpecialPhysicsContactDescription(contact);
-}
-
-- (void)didEndContact:(SKPhysicsContact *)contact;
-{
-    //    NSString *description = enhSpecialPhysicsContactDescription(contact);
 }
 
 

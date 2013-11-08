@@ -12,8 +12,6 @@
 -(SKNode *)makeNunchuckAtLocation:(CGPoint)location withBackgroundColor:(SKColor *)backgroundColor withStrokeColor:(SKColor *)strokeColor;
 -(void)wiggleStuffWithMagnitude:(CGFloat)magnitude;
 
-NSString *enhSpecialPhysicsContactDescription(SKPhysicsContact *physicsThing);
-
 // Useful random functions.
 extern CGFloat myRandf();
 extern CGFloat myRand(CGFloat low, CGFloat high);
