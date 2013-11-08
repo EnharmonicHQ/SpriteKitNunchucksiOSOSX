@@ -45,6 +45,12 @@ static inline void enhPopGraphicContext()
 #endif
 }
 
+#if TARGET_OS_IPHONE
+#define ENHBezierPath UIBezierPath
+#else
+#define ENHBezierPath NSBezierPath
+#endif
+
 @interface ENHBaseScene () <SKPhysicsContactDelegate>
 
 @property BOOL contentCreated;
@@ -78,11 +84,7 @@ static inline void enhPopGraphicContext()
     CGRect rect = (CGRect){strokeWidth/2.0f, strokeWidth/2.0f, size.width - strokeWidth, size.height - strokeWidth};
 
     //create a bezier path
-#if TARGET_OS_IPHONE
-    UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRect:rect];
-#else
-    NSBezierPath *rectanglePath = [NSBezierPath bezierPathWithRect:rect];
-#endif
+    ENHBezierPath *rectanglePath = [ENHBezierPath bezierPathWithRect:rect];
 
     //draw the rectangle
     [backgroundColor setFill];
