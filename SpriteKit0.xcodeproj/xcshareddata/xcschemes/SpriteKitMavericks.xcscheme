@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "ABFDC71317B66ED500B99CEF"
-               BuildableName = "SpriteKit0.app"
+               BuildableName = "SpriteKitMavericks.app"
                BlueprintName = "SpriteKitMavericks"
                ReferencedContainer = "container:SpriteKit0.xcodeproj">
             </BuildableReference>
@@ -53,7 +53,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ABFDC71317B66ED500B99CEF"
-            BuildableName = "SpriteKit0.app"
+            BuildableName = "SpriteKitMavericks.app"
             BlueprintName = "SpriteKitMavericks"
             ReferencedContainer = "container:SpriteKit0.xcodeproj">
          </BuildableReference>
@@ -72,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ABFDC71317B66ED500B99CEF"
-            BuildableName = "SpriteKit0.app"
+            BuildableName = "SpriteKitMavericks.app"
             BlueprintName = "SpriteKitMavericks"
             ReferencedContainer = "container:SpriteKit0.xcodeproj">
          </BuildableReference>
@@ -90,7 +90,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ABFDC71317B66ED500B99CEF"
-            BuildableName = "SpriteKit0.app"
+            BuildableName = "SpriteKitMavericks.app"
             BlueprintName = "SpriteKitMavericks"
             ReferencedContainer = "container:SpriteKit0.xcodeproj">
          </BuildableReference>

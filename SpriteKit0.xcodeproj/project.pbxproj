@@ -63,7 +63,7 @@
 		ABC4906B182D51570046912A /* ENHSimplifyingCoreGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHSimplifyingCoreGraphics.m; path = SharedScens/ENHSimplifyingCoreGraphics.m; sourceTree = "<group>"; };
 		ABDB090018275EBE00AD4956 /* ENHSKTextureMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENHSKTextureMetadata.h; path = SharedScens/ENHSKTextureMetadata.h; sourceTree = "<group>"; };
 		ABDB090118275EBE00AD4956 /* ENHSKTextureMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHSKTextureMetadata.m; path = SharedScens/ENHSKTextureMetadata.m; sourceTree = "<group>"; };
-		ABFDC71417B66ED500B99CEF /* SpriteKit0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKit0.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABFDC71417B66ED500B99CEF /* SpriteKitMavericks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKitMavericks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABFDC71717B66ED500B99CEF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		ABFDC71917B66ED500B99CEF /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		ABFDC71C17B66ED500B99CEF /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -164,7 +164,7 @@
 		ABFDC71517B66ED500B99CEF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ABFDC71417B66ED500B99CEF /* SpriteKit0.app */,
+				ABFDC71417B66ED500B99CEF /* SpriteKitMavericks.app */,
 				AB84B396180F9C64005A158B /* SpriteKitiOS.app */,
 			);
 			name = Products;
@@ -256,7 +256,7 @@
 			);
 			name = SpriteKitMavericks;
 			productName = SpriteKit0;
-			productReference = ABFDC71417B66ED500B99CEF /* SpriteKit0.app */;
+			productReference = ABFDC71417B66ED500B99CEF /* SpriteKitMavericks.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
