@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "ABFDC71317B66ED500B99CEF"
-               BuildableName = "SpriteKit0.app"
-               BlueprintName = "SpriteKitMavericks"
+               BuildableName = "SpriteKitOSX.app"
+               BlueprintName = "SpriteKitOSX"
                ReferencedContainer = "container:SpriteKit0.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -53,8 +53,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ABFDC71317B66ED500B99CEF"
-            BuildableName = "SpriteKit0.app"
-            BlueprintName = "SpriteKitMavericks"
+            BuildableName = "SpriteKitOSX.app"
+            BlueprintName = "SpriteKitOSX"
             ReferencedContainer = "container:SpriteKit0.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -68,12 +68,13 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ABFDC71317B66ED500B99CEF"
-            BuildableName = "SpriteKit0.app"
-            BlueprintName = "SpriteKitMavericks"
+            BuildableName = "SpriteKitOSX.app"
+            BlueprintName = "SpriteKitOSX"
             ReferencedContainer = "container:SpriteKit0.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -86,12 +87,13 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ABFDC71317B66ED500B99CEF"
-            BuildableName = "SpriteKit0.app"
-            BlueprintName = "SpriteKitMavericks"
+            BuildableName = "SpriteKitOSX.app"
+            BlueprintName = "SpriteKitOSX"
             ReferencedContainer = "container:SpriteKit0.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

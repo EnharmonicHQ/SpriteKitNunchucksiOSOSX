@@ -63,7 +63,7 @@
 		ABC4906B182D51570046912A /* ENHSimplifyingCoreGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHSimplifyingCoreGraphics.m; path = SharedScens/ENHSimplifyingCoreGraphics.m; sourceTree = "<group>"; };
 		ABDB090018275EBE00AD4956 /* ENHSKTextureMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENHSKTextureMetadata.h; path = SharedScens/ENHSKTextureMetadata.h; sourceTree = "<group>"; };
 		ABDB090118275EBE00AD4956 /* ENHSKTextureMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHSKTextureMetadata.m; path = SharedScens/ENHSKTextureMetadata.m; sourceTree = "<group>"; };
-		ABFDC71417B66ED500B99CEF /* SpriteKit0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKit0.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABFDC71417B66ED500B99CEF /* SpriteKitOSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKitOSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABFDC71717B66ED500B99CEF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		ABFDC71917B66ED500B99CEF /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		ABFDC71C17B66ED500B99CEF /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				AB84B3D5180F9CCF005A158B /* Shared */,
-				ABFDC71F17B66ED500B99CEF /* SpriteKitMavericks */,
+				ABFDC71F17B66ED500B99CEF /* SpriteKitOSX */,
 				AB84B39E180F9C65005A158B /* SpriteKitiOS */,
 				ABFDC71617B66ED500B99CEF /* Frameworks */,
 				ABFDC71517B66ED500B99CEF /* Products */,
@@ -164,7 +164,7 @@
 		ABFDC71517B66ED500B99CEF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ABFDC71417B66ED500B99CEF /* SpriteKit0.app */,
+				ABFDC71417B66ED500B99CEF /* SpriteKitOSX.app */,
 				AB84B396180F9C64005A158B /* SpriteKitiOS.app */,
 			);
 			name = Products;
@@ -195,7 +195,7 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		ABFDC71F17B66ED500B99CEF /* SpriteKitMavericks */ = {
+		ABFDC71F17B66ED500B99CEF /* SpriteKitOSX */ = {
 			isa = PBXGroup;
 			children = (
 				ABFDC72B17B66ED500B99CEF /* MainMenu.xib */,
@@ -206,7 +206,7 @@
 				ABFDC73517B66ED500B99CEF /* Images.xcassets */,
 				ABFDC72017B66ED500B99CEF /* Supporting Files */,
 			);
-			name = SpriteKitMavericks;
+			name = SpriteKitOSX;
 			path = SpriteKit0;
 			sourceTree = "<group>";
 		};
@@ -242,9 +242,9 @@
 			productReference = AB84B396180F9C64005A158B /* SpriteKitiOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		ABFDC71317B66ED500B99CEF /* SpriteKitMavericks */ = {
+		ABFDC71317B66ED500B99CEF /* SpriteKitOSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ABFDC74B17B66ED500B99CEF /* Build configuration list for PBXNativeTarget "SpriteKitMavericks" */;
+			buildConfigurationList = ABFDC74B17B66ED500B99CEF /* Build configuration list for PBXNativeTarget "SpriteKitOSX" */;
 			buildPhases = (
 				ABFDC71017B66ED500B99CEF /* Sources */,
 				ABFDC71117B66ED500B99CEF /* Frameworks */,
@@ -254,9 +254,9 @@
 			);
 			dependencies = (
 			);
-			name = SpriteKitMavericks;
+			name = SpriteKitOSX;
 			productName = SpriteKit0;
-			productReference = ABFDC71417B66ED500B99CEF /* SpriteKit0.app */;
+			productReference = ABFDC71417B66ED500B99CEF /* SpriteKitOSX.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -282,7 +282,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				ABFDC71317B66ED500B99CEF /* SpriteKitMavericks */,
+				ABFDC71317B66ED500B99CEF /* SpriteKitOSX */,
 				AB84B395180F9C64005A158B /* SpriteKitiOS */,
 			);
 		};
@@ -405,7 +405,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "SpriteKitiOS/SpriteKitiOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
@@ -428,7 +428,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SpriteKitiOS/SpriteKitiOS-Prefix.pch";
 				INFOPLIST_FILE = "SpriteKitiOS/SpriteKitiOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
@@ -516,8 +516,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SpriteKit0/SpriteKit0-Prefix.pch";
 				INFOPLIST_FILE = "SpriteKit0/SpriteKit0-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.9;
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -531,8 +531,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SpriteKit0/SpriteKit0-Prefix.pch";
 				INFOPLIST_FILE = "SpriteKit0/SpriteKit0-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.9;
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -559,7 +559,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ABFDC74B17B66ED500B99CEF /* Build configuration list for PBXNativeTarget "SpriteKitMavericks" */ = {
+		ABFDC74B17B66ED500B99CEF /* Build configuration list for PBXNativeTarget "SpriteKitOSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ABFDC74C17B66ED500B99CEF /* Debug */,
