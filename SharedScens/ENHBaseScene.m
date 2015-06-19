@@ -152,11 +152,13 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
     
     CGSize chuckSize = (CGSize){.width=width, .height=height};
     SKTexture *texture = [self textureWithSize:chuckSize
-                           withBackgroundColor:backgroundColor
+                           withBackgroundColor:[SKColor whiteColor]
                                withStrokeColor:strokeColor
                                withStrokeWidth:lineWidth];
     
     SKSpriteNode *chuck = [SKSpriteNode spriteNodeWithTexture:texture size:chuckSize];
+    [chuck setColor:backgroundColor];
+    [chuck setColorBlendFactor:1.0];
     chuck.position = location;
     chuck.zPosition = 1.0f;
     
