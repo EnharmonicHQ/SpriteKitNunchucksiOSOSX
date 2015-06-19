@@ -20,11 +20,12 @@
     /* Set the scale mode to scale to fit the window */
     scene.scaleMode = SKSceneScaleModeAspectFit;
 
-    [self.skView setIgnoresSiblingOrder:YES];
     [self.skView presentScene:scene];
-    self.skView.frameInterval = 2;
+#if DEBUG
     self.skView.showsFPS = YES;
     self.skView.showsNodeCount = YES;
+    self.skView.showsPhysics = YES;
+#endif
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender

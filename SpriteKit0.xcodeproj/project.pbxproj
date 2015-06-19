@@ -22,10 +22,6 @@
 		AB84B3D4180F9CC7005A158B /* ENHBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */; };
 		AB84B3D6180F9D4C005A158B /* ENHBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */; };
 		AB84B3DA181044A7005A158B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB84B3D9181044A7005A158B /* CoreMotion.framework */; };
-		ABC4906C182D51570046912A /* ENHSimplifyingCoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC4906B182D51570046912A /* ENHSimplifyingCoreGraphics.m */; };
-		ABC4906D182D51570046912A /* ENHSimplifyingCoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC4906B182D51570046912A /* ENHSimplifyingCoreGraphics.m */; };
-		ABDB090218275EBE00AD4956 /* ENHSKTextureMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDB090118275EBE00AD4956 /* ENHSKTextureMetadata.m */; };
-		ABDB090318275EBE00AD4956 /* ENHSKTextureMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDB090118275EBE00AD4956 /* ENHSKTextureMetadata.m */; };
 		ABFDC71817B66ED500B99CEF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFDC71717B66ED500B99CEF /* Cocoa.framework */; };
 		ABFDC71A17B66ED500B99CEF /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFDC71917B66ED500B99CEF /* SpriteKit.framework */; };
 		ABFDC72417B66ED500B99CEF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABFDC72217B66ED500B99CEF /* InfoPlist.strings */; };
@@ -59,10 +55,6 @@
 		AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHBaseScene.m; path = SharedScens/ENHBaseScene.m; sourceTree = "<group>"; };
 		AB84B3D8181043D2005A158B /* ENHBaseSceneProtected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ENHBaseSceneProtected.h; path = SharedScens/ENHBaseSceneProtected.h; sourceTree = "<group>"; };
 		AB84B3D9181044A7005A158B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
-		ABC4906A182D51570046912A /* ENHSimplifyingCoreGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENHSimplifyingCoreGraphics.h; path = SharedScens/ENHSimplifyingCoreGraphics.h; sourceTree = "<group>"; };
-		ABC4906B182D51570046912A /* ENHSimplifyingCoreGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHSimplifyingCoreGraphics.m; path = SharedScens/ENHSimplifyingCoreGraphics.m; sourceTree = "<group>"; };
-		ABDB090018275EBE00AD4956 /* ENHSKTextureMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENHSKTextureMetadata.h; path = SharedScens/ENHSKTextureMetadata.h; sourceTree = "<group>"; };
-		ABDB090118275EBE00AD4956 /* ENHSKTextureMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHSKTextureMetadata.m; path = SharedScens/ENHSKTextureMetadata.m; sourceTree = "<group>"; };
 		ABFDC71417B66ED500B99CEF /* SpriteKitOSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKitOSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABFDC71717B66ED500B99CEF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		ABFDC71917B66ED500B99CEF /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
@@ -139,10 +131,6 @@
 		AB84B3D5180F9CCF005A158B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				ABC4906A182D51570046912A /* ENHSimplifyingCoreGraphics.h */,
-				ABC4906B182D51570046912A /* ENHSimplifyingCoreGraphics.m */,
-				ABDB090018275EBE00AD4956 /* ENHSKTextureMetadata.h */,
-				ABDB090118275EBE00AD4956 /* ENHSKTextureMetadata.m */,
 				AB84B3D8181043D2005A158B /* ENHBaseSceneProtected.h */,
 				AB84B3D2180F9CC7005A158B /* ENHBaseScene.h */,
 				AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */,
@@ -318,10 +306,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABDB090318275EBE00AD4956 /* ENHSKTextureMetadata.m in Sources */,
 				AB84B3D6180F9D4C005A158B /* ENHBaseScene.m in Sources */,
 				AB84B3A9180F9C65005A158B /* ENHAppDelegate.m in Sources */,
-				ABC4906D182D51570046912A /* ENHSimplifyingCoreGraphics.m in Sources */,
 				AB84B3A5180F9C65005A158B /* main.m in Sources */,
 				AB84B3B5180F9C65005A158B /* ENHiOSScene.m in Sources */,
 				AB84B3B2180F9C65005A158B /* ENHViewController.m in Sources */,
@@ -334,10 +320,8 @@
 			files = (
 				ABFDC72E17B66ED500B99CEF /* ENHOSXScene.m in Sources */,
 				ABFDC73117B66ED500B99CEF /* ENHAppDelegate.m in Sources */,
-				ABDB090218275EBE00AD4956 /* ENHSKTextureMetadata.m in Sources */,
 				AB84B3D4180F9CC7005A158B /* ENHBaseScene.m in Sources */,
 				ABFDC72617B66ED500B99CEF /* main.m in Sources */,
-				ABC4906C182D51570046912A /* ENHSimplifyingCoreGraphics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

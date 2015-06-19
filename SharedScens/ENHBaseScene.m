@@ -7,12 +7,11 @@
 
 #import "ENHBaseScene.h"
 #import "ENHBaseSceneProtected.h"
-#import "ENHSKTextureMetadata.h"
-#import "ENHSimplifyingCoreGraphics.h"
 
 static const uint32_t edgeCategory = 0x1 << 1;
 static const uint32_t chuckCategory = 0x1 << 2;
 static const uint32_t mouseCategory = 0x1 << 3;
+static const BOOL showMouseNode = NO;
 
 //Useful random functions
 inline CGFloat myRandf()
@@ -29,7 +28,6 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
 
 @property BOOL contentCreated;
 @property SKNode *mouseNode;
-@property NSMutableArray *textureArray;
 
 @end
 
@@ -40,44 +38,10 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
     if (self = [super initWithSize:size])
     {
         self.backgroundColor = [SKColor colorWithRed:0.15f green:0.15f blue:0.3f alpha:1.0f];
-        _textureArray = [NSMutableArray arrayWithCapacity:2];
     }
     return self;
 }
 
--(SKTexture *)textureWithSize:(CGSize)size
-          withBackgroundColor:(SKColor *)backgroundColor
-              withStrokeColor:(SKColor *)strokeColor
-              withStrokeWidth:(CGFloat)strokeWidth
-{
-    NSPredicate *textureInfoPredicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        ENHSKTextureMetadata *metadata = evaluatedObject;
-        BOOL equal = (CGSizeEqualToSize(size, metadata.size)
-                      && strokeWidth == metadata.strokeWidth
-                      && [strokeColor isEqual:metadata.strokeColor]
-                      && [backgroundColor isEqual:metadata.backgroundColor]);
-        return equal;
-    }];
-
-    NSArray *matchingTextureMetadata = [self.textureArray filteredArrayUsingPredicate:textureInfoPredicate];
-    ENHSKTextureMetadata *metadata = [matchingTextureMetadata firstObject];
-
-    if (metadata == nil || metadata.texture == nil)
-    {
-        CGImageRef image = [ENHSimplifyingCoreGraphics newRectangleImageWithSize:size withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:strokeWidth];
-        SKTexture *texture = [SKTexture textureWithCGImage:image];
-        CGImageRelease(image);
-        ENHSKTextureMetadata *metadata = [ENHSKTextureMetadata metadataWithTexture:texture
-                                                                              size:size
-                                                                   backgroundColor:backgroundColor
-                                                                       strokeColor:strokeColor
-                                                                       strokeWidth:strokeWidth];
-        [self.textureArray addObject:metadata];
-    }
-    return metadata.texture;
-}
-
-static const BOOL showMouseNode = NO;
 -(void)createSceneContents
 {
     self.scaleMode = SKSceneScaleModeAspectFit;
@@ -92,7 +56,6 @@ static const BOOL showMouseNode = NO;
     CGFloat mouseSquareWidthHeight = TARGET_OS_IPHONE ? 24.f : 120.f;
     CGSize mouseSize = (CGSize) {mouseSquareWidthHeight, mouseSquareWidthHeight};
     self.mouseNode = [SKSpriteNode spriteNodeWithColor:showMouseNode ? [[SKColor lightGrayColor] colorWithAlphaComponent:0.5]:[SKColor clearColor] size:mouseSize];
-    self.mouseNode.zPosition = 1.0f;
     SKPhysicsBody *spriteBody = [SKPhysicsBody bodyWithRectangleOfSize:mouseSize];
     spriteBody.categoryBitMask = mouseCategory;
     spriteBody.mass = 2;
@@ -143,7 +106,7 @@ static const BOOL showMouseNode = NO;
 #if TARGET_OS_IPHONE
     CGFloat width = 44.0f;
     CGFloat height = 8.0f;
-    CGFloat lineWidth = 1.0f;
+    CGFloat lineWidth = 2.0f;
 #else
     CGFloat width = 110.0f;
     CGFloat height = 20.0f;
@@ -151,19 +114,21 @@ static const BOOL showMouseNode = NO;
 #endif
 
     CGSize chuckSize = (CGSize){.width=width, .height=height};
-    SKTexture *texture = [self textureWithSize:chuckSize
-                           withBackgroundColor:backgroundColor
-                               withStrokeColor:strokeColor
-                               withStrokeWidth:lineWidth];
-
-    SKSpriteNode *chuck = [SKSpriteNode spriteNodeWithTexture:texture size:chuckSize];
+    SKShapeNode *chuck = [SKShapeNode node];
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    CGRect chuckRect = (CGRect){.origin = {-width * 0.5, -height * 0.5}, .size = (CGSize){.width = width, .height = height}};
+    CGPathRef path = CGPathCreateWithRect(chuckRect, &transform);
+    chuck.path = path;
+    chuck.fillColor = backgroundColor;
+    chuck.strokeColor = strokeColor;
+    chuck.lineWidth = lineWidth;
     chuck.position = location;
-    chuck.zPosition = 1.0f;
+    CGPathRelease(path);
 
     SKPhysicsBody *chuckBody = [SKPhysicsBody bodyWithRectangleOfSize:chuckSize];
     chuckBody.categoryBitMask = chuckCategory;
     chuckBody.mass = 1;
-    chuckBody.restitution = 0.8f; //bouncy bouncy
+    chuckBody.restitution = 0.5f; //bouncy bouncy
     chuckBody.linearDamping = 0.0f; //friction
     chuckBody.collisionBitMask = chuckCategory | mouseCategory | edgeCategory;
     chuck.physicsBody = chuckBody;
