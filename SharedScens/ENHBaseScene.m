@@ -7,6 +7,7 @@
 
 #import "ENHBaseScene.h"
 #import "ENHBaseSceneProtected.h"
+#import "ENHSKTextureMetadata.h"
 #import "ENHSimplifyingCoreGraphics.h"
 
 static const uint32_t edgeCategory = 0x1 << 1;
@@ -29,6 +30,7 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
 
 @property BOOL contentCreated;
 @property SKNode *mouseNode;
+@property NSMutableArray *textureArray;
 
 @end
 
@@ -39,8 +41,41 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
     if (self = [super initWithSize:size])
     {
         self.backgroundColor = [SKColor colorWithRed:0.15f green:0.15f blue:0.3f alpha:1.0f];
+        _textureArray = [NSMutableArray arrayWithCapacity:2];
     }
     return self;
+}
+
+-(SKTexture *)textureWithSize:(CGSize)size
+          withBackgroundColor:(SKColor *)backgroundColor
+              withStrokeColor:(SKColor *)strokeColor
+              withStrokeWidth:(CGFloat)strokeWidth
+{
+    NSPredicate *textureInfoPredicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        ENHSKTextureMetadata *metadata = evaluatedObject;
+        BOOL equal = (CGSizeEqualToSize(size, metadata.size)
+                      && strokeWidth == metadata.strokeWidth
+                      && [strokeColor isEqual:metadata.strokeColor]
+                      && [backgroundColor isEqual:metadata.backgroundColor]);
+        return equal;
+    }];
+
+    NSArray *matchingTextureMetadata = [self.textureArray filteredArrayUsingPredicate:textureInfoPredicate];
+    ENHSKTextureMetadata *metadata = [matchingTextureMetadata firstObject];
+
+    if (metadata == nil || metadata.texture == nil)
+    {
+        CGImageRef image = [ENHSimplifyingCoreGraphics newRectangleImageWithSize:size withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:strokeWidth];
+        SKTexture *texture = [SKTexture textureWithCGImage:image];
+        CGImageRelease(image);
+        metadata = [ENHSKTextureMetadata metadataWithTexture:texture
+                                                        size:size
+                                             backgroundColor:backgroundColor
+                                                 strokeColor:strokeColor
+                                                 strokeWidth:strokeWidth];
+        [self.textureArray addObject:metadata];
+    }
+    return metadata.texture;
 }
 
 -(void)createSceneContents
@@ -116,9 +151,10 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
 #endif
     
     CGSize chuckSize = (CGSize){.width=width, .height=height};
-    CGImageRef image = [ENHSimplifyingCoreGraphics newRectangleImageWithSize:chuckSize withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:lineWidth];
-    SKTexture *texture = [SKTexture textureWithCGImage:image];
-    CGImageRelease(image);
+    SKTexture *texture = [self textureWithSize:chuckSize
+                           withBackgroundColor:backgroundColor
+                               withStrokeColor:strokeColor
+                               withStrokeWidth:lineWidth];
     
     SKSpriteNode *chuck = [SKSpriteNode spriteNodeWithTexture:texture size:chuckSize];
     chuck.position = location;
