@@ -16,6 +16,7 @@
 
     // Configure the view.
     SKView * skView = (SKView *)self.view;
+    skView.ignoresSiblingOrder = YES;
 #if DEBUG
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;

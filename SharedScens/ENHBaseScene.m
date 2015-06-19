@@ -56,6 +56,7 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
     CGFloat mouseSquareWidthHeight = TARGET_OS_IPHONE ? 24.f : 120.f;
     CGSize mouseSize = (CGSize) {mouseSquareWidthHeight, mouseSquareWidthHeight};
     self.mouseNode = [SKSpriteNode spriteNodeWithColor:showMouseNode ? [[SKColor lightGrayColor] colorWithAlphaComponent:0.5]:[SKColor clearColor] size:mouseSize];
+    self.mouseNode.zPosition = 1.0;
     SKPhysicsBody *spriteBody = [SKPhysicsBody bodyWithRectangleOfSize:mouseSize];
     spriteBody.categoryBitMask = mouseCategory;
     spriteBody.mass = 2;
@@ -123,6 +124,7 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
     chuck.strokeColor = strokeColor;
     chuck.lineWidth = lineWidth;
     chuck.position = location;
+    chuck.zPosition = 1.0;
     CGPathRelease(path);
 
     SKPhysicsBody *chuckBody = [SKPhysicsBody bodyWithRectangleOfSize:chuckSize];
