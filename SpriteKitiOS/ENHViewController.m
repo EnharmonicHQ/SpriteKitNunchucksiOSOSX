@@ -16,10 +16,12 @@
 
     // Configure the view.
     SKView * skView = (SKView *)self.view;
+    skView.ignoresSiblingOrder = YES;
+#if DEBUG
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
-    skView.ignoresSiblingOrder = YES;
-    skView.frameInterval = 2;
+    skView.showsPhysics = YES;
+#endif
     
     // Create and configure the scene.
     SKScene * scene = [ENHiOSScene sceneWithSize:skView.bounds.size];

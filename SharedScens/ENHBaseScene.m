@@ -13,6 +13,7 @@
 static const uint32_t edgeCategory = 0x1 << 1;
 static const uint32_t chuckCategory = 0x1 << 2;
 static const uint32_t mouseCategory = 0x1 << 3;
+static const BOOL showMouseNode = NO;
 
 //Useful random functions
 inline CGFloat myRandf()
@@ -67,17 +68,16 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
         CGImageRef image = [ENHSimplifyingCoreGraphics newRectangleImageWithSize:size withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:strokeWidth];
         SKTexture *texture = [SKTexture textureWithCGImage:image];
         CGImageRelease(image);
-        ENHSKTextureMetadata *metadata = [ENHSKTextureMetadata metadataWithTexture:texture
-                                                                              size:size
-                                                                   backgroundColor:backgroundColor
-                                                                       strokeColor:strokeColor
-                                                                       strokeWidth:strokeWidth];
+        metadata = [ENHSKTextureMetadata metadataWithTexture:texture
+                                                        size:size
+                                             backgroundColor:backgroundColor
+                                                 strokeColor:strokeColor
+                                                 strokeWidth:strokeWidth];
         [self.textureArray addObject:metadata];
     }
     return metadata.texture;
 }
 
-static const BOOL showMouseNode = NO;
 -(void)createSceneContents
 {
     self.scaleMode = SKSceneScaleModeAspectFit;
@@ -92,7 +92,7 @@ static const BOOL showMouseNode = NO;
     CGFloat mouseSquareWidthHeight = TARGET_OS_IPHONE ? 24.f : 120.f;
     CGSize mouseSize = (CGSize) {mouseSquareWidthHeight, mouseSquareWidthHeight};
     self.mouseNode = [SKSpriteNode spriteNodeWithColor:showMouseNode ? [[SKColor lightGrayColor] colorWithAlphaComponent:0.5]:[SKColor clearColor] size:mouseSize];
-    self.mouseNode.zPosition = 1.0f;
+    self.mouseNode.zPosition = 1.0;
     SKPhysicsBody *spriteBody = [SKPhysicsBody bodyWithRectangleOfSize:mouseSize];
     spriteBody.categoryBitMask = mouseCategory;
     spriteBody.mass = 2;
@@ -138,7 +138,7 @@ static const BOOL showMouseNode = NO;
 
 -(SKNode *)makeNunchuckAtLocation:(CGPoint)location withBackgroundColor:(SKColor *)backgroundColor withStrokeColor:(SKColor *)strokeColor
 {
-
+    
     //Little chucks on iPhone; bigger ones on OS X
 #if TARGET_OS_IPHONE
     CGFloat width = 44.0f;
@@ -149,17 +149,17 @@ static const BOOL showMouseNode = NO;
     CGFloat height = 20.0f;
     CGFloat lineWidth = 4.0f;
 #endif
-
+    
     CGSize chuckSize = (CGSize){.width=width, .height=height};
     SKTexture *texture = [self textureWithSize:chuckSize
                            withBackgroundColor:backgroundColor
                                withStrokeColor:strokeColor
                                withStrokeWidth:lineWidth];
-
+    
     SKSpriteNode *chuck = [SKSpriteNode spriteNodeWithTexture:texture size:chuckSize];
     chuck.position = location;
     chuck.zPosition = 1.0f;
-
+    
     SKPhysicsBody *chuckBody = [SKPhysicsBody bodyWithRectangleOfSize:chuckSize];
     chuckBody.categoryBitMask = chuckCategory;
     chuckBody.mass = 1;
