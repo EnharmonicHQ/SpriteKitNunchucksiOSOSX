@@ -22,6 +22,8 @@
 		AB84B3D4180F9CC7005A158B /* ENHBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */; };
 		AB84B3D6180F9D4C005A158B /* ENHBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */; };
 		AB84B3DA181044A7005A158B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB84B3D9181044A7005A158B /* CoreMotion.framework */; };
+		ABDC382A1B33C0910077D32D /* ENHSimplifyingCoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDC38271B33C0910077D32D /* ENHSimplifyingCoreGraphics.m */; };
+		ABDC382B1B33C0910077D32D /* ENHSimplifyingCoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDC38271B33C0910077D32D /* ENHSimplifyingCoreGraphics.m */; };
 		ABFDC71817B66ED500B99CEF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFDC71717B66ED500B99CEF /* Cocoa.framework */; };
 		ABFDC71A17B66ED500B99CEF /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFDC71917B66ED500B99CEF /* SpriteKit.framework */; };
 		ABFDC72417B66ED500B99CEF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABFDC72217B66ED500B99CEF /* InfoPlist.strings */; };
@@ -55,6 +57,8 @@
 		AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHBaseScene.m; path = SharedScens/ENHBaseScene.m; sourceTree = "<group>"; };
 		AB84B3D8181043D2005A158B /* ENHBaseSceneProtected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ENHBaseSceneProtected.h; path = SharedScens/ENHBaseSceneProtected.h; sourceTree = "<group>"; };
 		AB84B3D9181044A7005A158B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		ABDC38261B33C0910077D32D /* ENHSimplifyingCoreGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ENHSimplifyingCoreGraphics.h; path = SharedScens/ENHSimplifyingCoreGraphics.h; sourceTree = "<group>"; };
+		ABDC38271B33C0910077D32D /* ENHSimplifyingCoreGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ENHSimplifyingCoreGraphics.m; path = SharedScens/ENHSimplifyingCoreGraphics.m; sourceTree = "<group>"; };
 		ABFDC71417B66ED500B99CEF /* SpriteKitOSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKitOSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABFDC71717B66ED500B99CEF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		ABFDC71917B66ED500B99CEF /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
@@ -132,6 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				AB84B3D8181043D2005A158B /* ENHBaseSceneProtected.h */,
+				ABDC38261B33C0910077D32D /* ENHSimplifyingCoreGraphics.h */,
+				ABDC38271B33C0910077D32D /* ENHSimplifyingCoreGraphics.m */,
 				AB84B3D2180F9CC7005A158B /* ENHBaseScene.h */,
 				AB84B3D3180F9CC7005A158B /* ENHBaseScene.m */,
 			);
@@ -311,6 +317,7 @@
 				AB84B3A5180F9C65005A158B /* main.m in Sources */,
 				AB84B3B5180F9C65005A158B /* ENHiOSScene.m in Sources */,
 				AB84B3B2180F9C65005A158B /* ENHViewController.m in Sources */,
+				ABDC382B1B33C0910077D32D /* ENHSimplifyingCoreGraphics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +328,7 @@
 				ABFDC72E17B66ED500B99CEF /* ENHOSXScene.m in Sources */,
 				ABFDC73117B66ED500B99CEF /* ENHAppDelegate.m in Sources */,
 				AB84B3D4180F9CC7005A158B /* ENHBaseScene.m in Sources */,
+				ABDC382A1B33C0910077D32D /* ENHSimplifyingCoreGraphics.m in Sources */,
 				ABFDC72617B66ED500B99CEF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
