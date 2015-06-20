@@ -89,7 +89,6 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
     self.physicsBody.contactTestBitMask = 0;
     self.physicsWorld.gravity = (CGVector) {.dx = 0.0f, .dy = -9.8f};
 
-    self.physicsWorld.speed = 0;
     CGFloat mouseSquareWidthHeight = TARGET_OS_IPHONE ? 24.f : 120.f;
     CGSize mouseSize = (CGSize) {mouseSquareWidthHeight, mouseSquareWidthHeight};
     self.mouseNode = [SKSpriteNode spriteNodeWithColor:showMouseNode ? [[SKColor lightGrayColor] colorWithAlphaComponent:0.5]:[SKColor clearColor] size:mouseSize];
@@ -101,7 +100,6 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
     spriteBody.collisionBitMask = mouseCategory;
     spriteBody.affectedByGravity = NO;
     self.mouseNode.physicsBody = spriteBody;
-    
 }
 
 - (void)didMoveToView:(SKView *)view
