@@ -38,13 +38,35 @@
 - (void)update:(NSTimeInterval)currentTime
 {
     [super update:currentTime];
+
+    static NSTimeInterval lastTime;
+    static NSUInteger chuckCount;
+    if (ABS(currentTime - lastTime) >= 1.0)
+    {
+        lastTime = currentTime;
+        CGSize sceneSize = self.scene.size;
+        for (NSUInteger i=0; i<10; i++)
+        {
+            CGPoint someplace = (CGPoint){.x = myRand(0.0, sceneSize.width), .y = myRand(0.0, sceneSize.height)};
+            SKColor *color = i%2 == 0 ? [SKColor redColor] : [SKColor greenColor];
+            SKNode *chuck = [self makeNunchuckAtLocation:someplace
+                                     withBackgroundColor:color
+                                         withStrokeColor:[SKColor blackColor]];
+            [self addChild:chuck];
+            chuckCount++;
+        }
+        NSLog(@"chuckCount = %@", @(chuckCount));
+    }
+
     if (self.motionManager != nil && self.motionManager.isDeviceMotionActive)
     {
         CMDeviceMotion *deviceMotion = [self.motionManager deviceMotion];
         CMAcceleration gravity = deviceMotion.gravity;
 //        NSLog(@"Gravity.x = %f Gravity.y = %f Gravity.z = %f", gravity.x, gravity.y, gravity.z);
         self.physicsWorld.gravity = (CGVector) {.dx = gravity.x * 9.8, .dy = gravity.y * 9.8};
+
     }
+
 }
 
 -(void)wiggleStuffWithMagnitude:(CGFloat)magnitude
