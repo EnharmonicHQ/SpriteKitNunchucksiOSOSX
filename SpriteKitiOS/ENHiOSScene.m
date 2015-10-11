@@ -68,14 +68,6 @@
         NSLog(@"chuckCount = %@", @(chuckCount));
     }
 
-    if (self.motionManager != nil && self.motionManager.isDeviceMotionActive)
-    {
-        CMDeviceMotion *deviceMotion = [self.motionManager deviceMotion];
-        CMAcceleration gravity = deviceMotion.gravity;
-
-
-    }
-
 }
 
 -(void)wiggleStuffWithMagnitude:(CGFloat)magnitude
