@@ -11,11 +11,21 @@
 
 @interface ENHiOSScene ()
 
-@property(nonatomic, retain)CMMotionManager *motionManager;
+@property(nonatomic, strong)CMMotionManager *motionManager;
 
 @end
 
 @implementation ENHiOSScene
+
+-(void)didMoveToView:(SKView *)view
+{
+    [super didMoveToView:view];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    [view addGestureRecognizer:tap];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+    [view addGestureRecognizer:pan];
+}
 
 -(id)initWithSize:(CGSize)size
 {
@@ -74,48 +84,57 @@
     }
 }
 
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)theEvent
+-(void)tap:(UITapGestureRecognizer *)tap
 {
-    if ([touches count] > 1)
+    if (tap.state == UIGestureRecognizerStateRecognized)
     {
-        [self wiggleStuffWithMagnitude:300.0f];
-    }
-    else
-    {
-        if (![self.mouseNode parent])
+        if (tap.numberOfTouches > 1)
         {
-            UITouch *touch = [touches anyObject];
-            //Make a new chuck if the mouse wasn't dragging around (mouse node has no parent)
-            CGPoint location = [touch locationInNode:self];
-            SKNode *spriteOne = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor greenColor] withStrokeColor:[SKColor blackColor]];
-            location.x += spriteOne.frame.size.width;
-            SKNode *spriteTwo = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor redColor] withStrokeColor:[SKColor blackColor]];
-            [self addChild:spriteOne];
-            [self addChild:spriteTwo];
-            location.x -= spriteOne.frame.size.width / 2.f;
-            SKPhysicsJointPin *chuckJoint = [SKPhysicsJointPin jointWithBodyA:spriteOne.physicsBody bodyB:spriteTwo.physicsBody anchor:location];
-
-            chuckJoint.frictionTorque = 0.2;
-            SKPhysicsWorld *world = [self physicsWorld];
-            [world addJoint:chuckJoint];
-            [self wiggleStuffWithMagnitude:40.0f];
+            [self wiggleStuffWithMagnitude:300.0f];
         }
         else
         {
-            [self.mouseNode removeFromParent];
+            if (![self.mouseNode parent])
+            {
+                //Make a new chuck if the mouse wasn't dragging around (mouse node has no parent)
+                CGPoint locationInView = [tap locationInView:self.view];
+                CGPoint location = [self.view convertPoint:locationInView toScene:self];
+                SKNode *spriteOne = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor greenColor] withStrokeColor:[SKColor blackColor]];
+                location.x += spriteOne.frame.size.width;
+                SKNode *spriteTwo = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor redColor] withStrokeColor:[SKColor blackColor]];
+                [self addChild:spriteOne];
+                [self addChild:spriteTwo];
+                location.x -= spriteOne.frame.size.width / 2.f;
+                SKPhysicsJointPin *chuckJoint = [SKPhysicsJointPin jointWithBodyA:spriteOne.physicsBody bodyB:spriteTwo.physicsBody anchor:location];
+                
+                chuckJoint.frictionTorque = 0.2;
+                SKPhysicsWorld *world = [self physicsWorld];
+                [world addJoint:chuckJoint];
+                [self wiggleStuffWithMagnitude:40.0f];
+            }
+            else
+            {
+                [self.mouseNode removeFromParent];
+            }
         }
     }
 }
 
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)theEvent
+-(void)pan:(UIPanGestureRecognizer *)pan
 {
-    //Move the clear mouse node around
-    UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInNode:self];
-    self.mouseNode.position = location;
-    if (![self.mouseNode parent])
+    if (pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled)
     {
-        [self addChild:self.mouseNode];
+        [self.mouseNode removeFromParent];
+    }
+    else
+    {
+        CGPoint locationInView = [pan locationInView:self.view];
+        CGPoint location = [self.view convertPoint:locationInView toScene:self];
+        self.mouseNode.position = location;
+        if (![self.mouseNode parent])
+        {
+            [self addChild:self.mouseNode];
+        }
     }
 }
 
