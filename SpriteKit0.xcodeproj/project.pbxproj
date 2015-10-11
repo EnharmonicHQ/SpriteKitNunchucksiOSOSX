@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB618E9B1BC9E4E2003886B1 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB618E9A1BC9E4E2003886B1 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
 		AB84B398180F9C65005A158B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB84B397180F9C65005A158B /* Foundation.framework */; };
 		AB84B39A180F9C65005A158B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB84B399180F9C65005A158B /* CoreGraphics.framework */; };
 		AB84B39C180F9C65005A158B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB84B39B180F9C65005A158B /* UIKit.framework */; };
@@ -14,8 +15,7 @@
 		AB84B3A3180F9C65005A158B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB84B3A1180F9C65005A158B /* InfoPlist.strings */; };
 		AB84B3A5180F9C65005A158B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3A4180F9C65005A158B /* main.m */; };
 		AB84B3A9180F9C65005A158B /* ENHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3A8180F9C65005A158B /* ENHAppDelegate.m */; };
-		AB84B3AC180F9C65005A158B /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB84B3AA180F9C65005A158B /* Main_iPhone.storyboard */; };
-		AB84B3AF180F9C65005A158B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB84B3AD180F9C65005A158B /* Main_iPad.storyboard */; };
+		AB84B3AC180F9C65005A158B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB84B3AA180F9C65005A158B /* Main.storyboard */; };
 		AB84B3B2180F9C65005A158B /* ENHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3B1180F9C65005A158B /* ENHViewController.m */; };
 		AB84B3B5180F9C65005A158B /* ENHiOSScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AB84B3B4180F9C65005A158B /* ENHiOSScene.m */; };
 		AB84B3B9180F9C65005A158B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB84B3B8180F9C65005A158B /* Images.xcassets */; };
@@ -38,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB618E9A1BC9E4E2003886B1 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
 		AB84B396180F9C64005A158B /* SpriteKitiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKitiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB84B397180F9C65005A158B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AB84B399180F9C65005A158B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -48,8 +49,7 @@
 		AB84B3A6180F9C65005A158B /* SpriteKitiOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpriteKitiOS-Prefix.pch"; sourceTree = "<group>"; };
 		AB84B3A7180F9C65005A158B /* ENHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHAppDelegate.h; sourceTree = "<group>"; };
 		AB84B3A8180F9C65005A158B /* ENHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ENHAppDelegate.m; sourceTree = "<group>"; };
-		AB84B3AB180F9C65005A158B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		AB84B3AE180F9C65005A158B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		AB84B3AB180F9C65005A158B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AB84B3B0180F9C65005A158B /* ENHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHViewController.h; sourceTree = "<group>"; };
 		AB84B3B1180F9C65005A158B /* ENHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ENHViewController.m; sourceTree = "<group>"; };
 		AB84B3B3180F9C65005A158B /* ENHiOSScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ENHiOSScene.h; sourceTree = "<group>"; };
@@ -113,8 +113,8 @@
 			children = (
 				AB84B3A7180F9C65005A158B /* ENHAppDelegate.h */,
 				AB84B3A8180F9C65005A158B /* ENHAppDelegate.m */,
-				AB84B3AA180F9C65005A158B /* Main_iPhone.storyboard */,
-				AB84B3AD180F9C65005A158B /* Main_iPad.storyboard */,
+				AB84B3AA180F9C65005A158B /* Main.storyboard */,
+				AB618E9A1BC9E4E2003886B1 /* Launch Screen.storyboard */,
 				AB84B3B0180F9C65005A158B /* ENHViewController.h */,
 				AB84B3B1180F9C65005A158B /* ENHViewController.m */,
 				AB84B3B3180F9C65005A158B /* ENHiOSScene.h */,
@@ -299,8 +299,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB84B3B9180F9C65005A158B /* Images.xcassets in Resources */,
-				AB84B3AF180F9C65005A158B /* Main_iPad.storyboard in Resources */,
-				AB84B3AC180F9C65005A158B /* Main_iPhone.storyboard in Resources */,
+				AB84B3AC180F9C65005A158B /* Main.storyboard in Resources */,
+				AB618E9B1BC9E4E2003886B1 /* Launch Screen.storyboard in Resources */,
 				AB84B3A3180F9C65005A158B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,20 +357,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		AB84B3AA180F9C65005A158B /* Main_iPhone.storyboard */ = {
+		AB84B3AA180F9C65005A158B /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				AB84B3AB180F9C65005A158B /* Base */,
 			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		AB84B3AD180F9C65005A158B /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AB84B3AE180F9C65005A158B /* Base */,
-			);
-			name = Main_iPad.storyboard;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		ABFDC72217B66ED500B99CEF /* InfoPlist.strings */ = {
@@ -396,7 +388,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -410,7 +401,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "SpriteKitiOS/SpriteKitiOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -424,7 +415,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -434,7 +424,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SpriteKitiOS/SpriteKitiOS-Prefix.pch";
 				INFOPLIST_FILE = "SpriteKitiOS/SpriteKitiOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
