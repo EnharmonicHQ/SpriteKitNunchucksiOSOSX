@@ -10,9 +10,6 @@
 #import "ENHSKTextureMetadata.h"
 #import "ENHSimplifyingCoreGraphics.h"
 
-static const uint32_t edgeCategory = 0x1 << 1;
-static const uint32_t chuckCategory = 0x1 << 2;
-static const uint32_t mouseCategory = 0x1 << 3;
 static const BOOL showMouseNode = NO;
 
 //Useful random functions
@@ -26,7 +23,7 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
     return myRandf() * (high - low) + low;
 }
 
-@interface ENHBaseScene () <SKPhysicsContactDelegate>
+@interface ENHBaseScene ()
 
 @property BOOL contentCreated;
 @property SKNode *mouseNode;
@@ -82,24 +79,11 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
 {
     self.scaleMode = SKSceneScaleModeAspectFit;
 
-    // Give the scene an edge and configure other physics info on the scene.
-    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
-    self.physicsBody.categoryBitMask = edgeCategory;
-    self.physicsBody.collisionBitMask = 0;
-    self.physicsBody.contactTestBitMask = 0;
-    self.physicsWorld.gravity = (CGVector) {.dx = 0.0f, .dy = -9.8f};
-
     CGFloat mouseSquareWidthHeight = TARGET_OS_IPHONE ? 24.f : 120.f;
     CGSize mouseSize = (CGSize) {mouseSquareWidthHeight, mouseSquareWidthHeight};
     self.mouseNode = [SKSpriteNode spriteNodeWithColor:showMouseNode ? [[SKColor lightGrayColor] colorWithAlphaComponent:0.5]:[SKColor clearColor] size:mouseSize];
     self.mouseNode.zPosition = 1.0;
-    SKPhysicsBody *spriteBody = [SKPhysicsBody bodyWithRectangleOfSize:mouseSize];
-    spriteBody.categoryBitMask = mouseCategory;
-    spriteBody.mass = 2;
-    spriteBody.restitution = 0.0f; //bouncy bouncy
-    spriteBody.collisionBitMask = mouseCategory;
-    spriteBody.affectedByGravity = NO;
-    self.mouseNode.physicsBody = spriteBody;
+    
 }
 
 - (void)didMoveToView:(SKView *)view
@@ -113,27 +97,7 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
 
 -(void)wiggleStuffWithMagnitude:(CGFloat)magnitude
 {
-    NSMutableArray *nodes = [[self children] mutableCopy];
-    [nodes removeObjectIdenticalTo:self.mouseNode]; //keep from wiggling the mouse node
-    for (SKNode *node in nodes)
-    {
-        SKPhysicsBody *physicsBody = node.physicsBody;
-
-        CGFloat dx = myRand(-magnitude, magnitude);
-        CGFloat dy = myRand(0, magnitude * 9.8); //Favor "up..." against gravity.
-
-        CGVector impulseVector = (CGVector) {.dx = dx, .dy = dy};
-        [physicsBody applyImpulse:impulseVector];
-
-        CGFloat multiplier = 1.0f;
-        if (magnitude < 100.0f)
-        {
-            //spin less at low magnitude (e.g.when clicking)
-            multiplier *= (magnitude / 100.0f);
-        }
-        CGFloat angularImpulse = myRand(-M_PI_2 * multiplier, M_PI_2 * multiplier);
-        [physicsBody applyAngularImpulse:angularImpulse];
-    }
+    
 }
 
 -(SKNode *)makeNunchuckAtLocation:(CGPoint)location withBackgroundColor:(SKColor *)backgroundColor withStrokeColor:(SKColor *)strokeColor
@@ -162,13 +126,6 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
     chuck.position = location;
     chuck.zPosition = 1.0f;
     
-    SKPhysicsBody *chuckBody = [SKPhysicsBody bodyWithRectangleOfSize:chuckSize];
-    chuckBody.categoryBitMask = chuckCategory;
-    chuckBody.mass = 1;
-    chuckBody.restitution = 0.8f; //bouncy bouncy
-    chuckBody.linearDamping = 0.0f; //friction
-    chuckBody.collisionBitMask = chuckCategory | mouseCategory | edgeCategory;
-    chuck.physicsBody = chuckBody;
     return chuck;
 }
 

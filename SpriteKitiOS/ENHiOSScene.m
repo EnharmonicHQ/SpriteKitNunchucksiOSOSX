@@ -48,40 +48,31 @@
 - (void)update:(NSTimeInterval)currentTime
 {
     [super update:currentTime];
-    if (self.motionManager != nil && self.motionManager.isDeviceMotionActive)
+
+    static NSTimeInterval lastTime;
+    static NSUInteger chuckCount;
+    if (ABS(currentTime - lastTime) >= 1.0)
     {
-        CMDeviceMotion *deviceMotion = [self.motionManager deviceMotion];
-        CMAcceleration gravity = deviceMotion.gravity;
-//        NSLog(@"Gravity.x = %f Gravity.y = %f Gravity.z = %f", gravity.x, gravity.y, gravity.z);
-        self.physicsWorld.gravity = (CGVector) {.dx = gravity.x * 9.8, .dy = gravity.y * 9.8};
+        lastTime = currentTime;
+        CGSize sceneSize = self.scene.size;
+        for (NSUInteger i=0; i<100; i++)
+        {
+            CGPoint someplace = (CGPoint){.x = myRand(0.0, sceneSize.width), .y = myRand(0.0, sceneSize.height)};
+            SKColor *color = i%2 == 0 ? [SKColor redColor] : [SKColor greenColor];
+            SKNode *chuck = [self makeNunchuckAtLocation:someplace
+                                     withBackgroundColor:color
+                                         withStrokeColor:[SKColor blackColor]];
+            [self addChild:chuck];
+            chuckCount++;
+        }
+        NSLog(@"chuckCount = %@", @(chuckCount));
     }
+
 }
 
 -(void)wiggleStuffWithMagnitude:(CGFloat)magnitude
 {
-    NSMutableArray *nodes = [[self children] mutableCopy];
-    [nodes removeObjectIdenticalTo:self.mouseNode]; //keep from wiggling the mouse node
-    for (SKNode *node in nodes)
-    {
-        SKPhysicsBody *physicsBody = node.physicsBody;
 
-        CGVector gravity = self.physicsWorld.gravity;
-
-        CGFloat dx = myRand(-magnitude * gravity.dx, magnitude * gravity.dx);
-        CGFloat dy = myRand(-magnitude * gravity.dx, magnitude * gravity.dx);
-
-        CGVector impulseVector = (CGVector) {.dx = dx, .dy = dy};
-        [physicsBody applyImpulse:impulseVector];
-
-        CGFloat multiplier = 1.0f;
-        if (magnitude < 100.0f)
-        {
-            //spin less at low magnitude (e.g.when clicking)
-            multiplier *= (magnitude / 100.0f);
-        }
-        CGFloat angularImpulse = myRand(-M_PI_2 * multiplier, M_PI_2 * multiplier);
-        [physicsBody applyAngularImpulse:angularImpulse];
-    }
 }
 
 -(void)tap:(UITapGestureRecognizer *)tap
@@ -104,13 +95,6 @@
                 SKNode *spriteTwo = [self makeNunchuckAtLocation:location withBackgroundColor:[SKColor redColor] withStrokeColor:[SKColor blackColor]];
                 [self addChild:spriteOne];
                 [self addChild:spriteTwo];
-                location.x -= spriteOne.frame.size.width / 2.f;
-                SKPhysicsJointPin *chuckJoint = [SKPhysicsJointPin jointWithBodyA:spriteOne.physicsBody bodyB:spriteTwo.physicsBody anchor:location];
-                
-                chuckJoint.frictionTorque = 0.2;
-                SKPhysicsWorld *world = [self physicsWorld];
-                [world addJoint:chuckJoint];
-                [self wiggleStuffWithMagnitude:40.0f];
             }
             else
             {
