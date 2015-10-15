@@ -7,6 +7,7 @@
 
 #import "ENHBaseScene.h"
 #import "ENHBaseSceneProtected.h"
+#import "ENHSimplifyingCoreGraphics.h"
 
 static const uint32_t edgeCategory = 0x1 << 1;
 static const uint32_t chuckCategory = 0x1 << 2;
@@ -102,35 +103,31 @@ inline CGFloat myRand(CGFloat low, CGFloat high)
 
 -(SKNode *)makeNunchuckAtLocation:(CGPoint)location withBackgroundColor:(SKColor *)backgroundColor withStrokeColor:(SKColor *)strokeColor
 {
-
+    
     //Little chucks on iPhone; bigger ones on OS X
 #if TARGET_OS_IPHONE
     CGFloat width = 44.0f;
     CGFloat height = 8.0f;
-    CGFloat lineWidth = 2.0f;
+    CGFloat lineWidth = 1.0f;
 #else
     CGFloat width = 110.0f;
     CGFloat height = 20.0f;
     CGFloat lineWidth = 4.0f;
 #endif
-
+    
     CGSize chuckSize = (CGSize){.width=width, .height=height};
-    SKShapeNode *chuck = [SKShapeNode node];
-    CGAffineTransform transform = CGAffineTransformIdentity;
-    CGRect chuckRect = (CGRect){.origin = {-width * 0.5, -height * 0.5}, .size = (CGSize){.width = width, .height = height}};
-    CGPathRef path = CGPathCreateWithRect(chuckRect, &transform);
-    chuck.path = path;
-    chuck.fillColor = backgroundColor;
-    chuck.strokeColor = strokeColor;
-    chuck.lineWidth = lineWidth;
+    CGImageRef image = [ENHSimplifyingCoreGraphics newRectangleImageWithSize:chuckSize withBackgroundColor:backgroundColor withStrokeColor:strokeColor withStrokeWidth:lineWidth];
+    SKTexture *texture = [SKTexture textureWithCGImage:image];
+    CGImageRelease(image);
+    
+    SKSpriteNode *chuck = [SKSpriteNode spriteNodeWithTexture:texture size:chuckSize];
     chuck.position = location;
-    chuck.zPosition = 1.0;
-    CGPathRelease(path);
-
+    chuck.zPosition = 1.0f;
+    
     SKPhysicsBody *chuckBody = [SKPhysicsBody bodyWithRectangleOfSize:chuckSize];
     chuckBody.categoryBitMask = chuckCategory;
     chuckBody.mass = 1;
-    chuckBody.restitution = 0.5f; //bouncy bouncy
+    chuckBody.restitution = 0.8f; //bouncy bouncy
     chuckBody.linearDamping = 0.0f; //friction
     chuckBody.collisionBitMask = chuckCategory | mouseCategory | edgeCategory;
     chuck.physicsBody = chuckBody;
