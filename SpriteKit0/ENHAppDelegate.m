@@ -19,7 +19,7 @@
 
     /* Set the scale mode to scale to fit the window */
     scene.scaleMode = SKSceneScaleModeAspectFit;
-
+    self.skView.ignoresSiblingOrder = YES;
     [self.skView presentScene:scene];
 #if DEBUG
     self.skView.showsFPS = YES;
